@@ -12,3 +12,5 @@ The only requirements are a laptop with a modern browser.
 All the lab materials will be provided through this Github repository.
 The instructors will provide hosted environments for you, which you will be able to access using a modern browser and provided credentials.
 
+[TODO]
+Environment description: ES installed through CP4I --> other options
