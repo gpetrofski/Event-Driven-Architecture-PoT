@@ -59,7 +59,7 @@ The _URL_ for Event Streams should have been provided seperately. Navigate to th
 
 Select _IBM provided credentials_ and enter the provided _username & password_ and click Log in.
 
-> <font size="1">**[Event Streams Username]**</font> > <br> > <font size="1">**[Event Streams Password]**</font>
+> <font size="1">**[Event Streams Username]**</font><br><font size="1">**[Event Streams Password]**</font>
 
 You should now be logged in and see the _Welcome to Event Streams_ page. You are now ready to start the lab.
 
@@ -182,7 +182,7 @@ Choose a unique and recognizable topic name. For this lab, we'd recommend using 
 
 For real use-cases, we would typically choose a relevant and meaningful topic name.
 
-> e.g. If my name would be John Doe, I would call my topic: JOD.POT
+> e.g. If my name would be John Doe, I would call my topic: **JOD.POT**
 
 > Fill in your **Topic name**, and click **Next**
 
