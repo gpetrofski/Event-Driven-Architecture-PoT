@@ -12,10 +12,9 @@ The Event Gateway is independent of your Kafka clusters, making access control t
 
 
 In this lab you will discover the main capabilities provided by the Event Endpoint Management. 
-- Part 1 - Discover the Event Endpoint Management user interface
-- Part 2 - You will start as an EEM administrator and you will describe the topic that you created in the event streams lab and you will publish it to make it available to consumers. 
-- Part 3 - Once the topic has been described and published, as an application developer, you will access the catalog to discover what event source are made available and you will subscribe to an event source.
-- Part 4 - Finally as an EEM administrator you will review the subscription and revoke the access.
+- Part 1 - TOPIC Authoring: you will start as an EEM administrator and you will describe the topic that you created in the event streams lab and you will publish it to make it available to consumers. 
+- Part 2 - Event Consumption: once the topic has been described and published, as an application developer, you will access the catalog to discover what event source are made available and you will subscribe to an event source.
+- Part 2 - Event Management: Finally as an EEM administrator you will review the subscription and revoke the access.
 
 // TODO: check the following
 We are also providing an optional lab that explain how API Connect, our API Management solution, integrates with our Event Endpoint Management solution.
@@ -31,7 +30,7 @@ To achieve those task you will need to login in EEM as an author user.
 // TODO: creds made available in another way ?
 - eem_url: https://evtaut-eem-ibm-eem-manager-event.cp4i21-5b7e0d81360e5972646d63308bd04bf7-0000.eu-de.containers.appdomain.cloud
 - eem_user: "eem_admin"
-- eem_pwd: "33M#Adm1n#Pwd!"
+- eem_pwd: "********"
 
 ![](resources/images/eem_login_admin.png)
 
@@ -109,12 +108,13 @@ We are now ready to publish the topic that we have described.
 
 ![](resources/images/topic_publish_gw.png)
 
-An message information should be displayed telling that the topic has been published.
+A message information should be displayed telling that the topic has been published.
 The topic is now published on the EEM catalog and is made available for application developer.
 The event gateway has been configured to allow connection to this TOPIC (connection to other topics that have not been configured on the gateway is not allowed) and only to **consume** event (event publication is not allowed). 
 Credentials needs to be provided in order to consume event through the gateway. These credentials will be generated when the application developer self-register to consume events from this topic in the catalog.
 This will be done on the next part of the lab.
 
+> The event gateway expose a topic to a consumer that is using **Kafka as protocol**.  
 
 ### Wrap-up
 In this part we have 
@@ -124,15 +124,29 @@ In this part we have
 
 > You have finished this part of the lab you can proceed to the next one.
 
-## Part 2 - Event Endpoint Management user Interface
+## Part 2 - Event Consumption
 
-This part of the lab will navigate you through the different part of the Event Endpoint Management (EEM) user interface.
+In this part you will play the role of an application developer that would like to consume an event made available.
+You will browse the event source in a catalog and will subscribe to the topic to which you would like to consume event.
 
-EEM supports two user roles currently:
-- the viewer role allows a user to access the EEM UI, browse the topic catalog and subscribe to a Topic 
-- the author role provides additionally to the viewer role the ability to author and manage the lifecycle of the Topic.
+> The event source is available for consumption using a Kafka Client
 
+> The **catalog** lists all available topics that represent event sources. Kafka administrators can check what topics are published and made available to others in the organization. Application developers in your organization can use the catalog to browse the available topics, and to view more information about each of them, including a description, tags, sample messages, schema details if used, and so on, enabling self-service access to the stream of events represented by the topics.
 
+If you would like to test the consumption of the event, it is possible to use the starter application provided in the EventStreams toolbox. The starter application require to have java installed. Please refer to the appendix "install java". //TODO is it documented ?
+
+> Note that you could use any Kafka client 
+
+1. Login in EEM using the user **EEM-user** 
+
+We will use the user **EEM-user** to experience the application developer view: the application developer is authorized to only access the catalog.
+
+Logout if not already done, by clicking on the user icon on the top right corner: 
+![](resources/images/logout.png)
+
+Login using the following credentials:
+- eem_user: "eem-admin"
+- eem_pwd: "****"
 
 The EEM administrator will manage the **Topics, Clusters, and Event gateways**
 Also will published the topics that will be visible to developers 
