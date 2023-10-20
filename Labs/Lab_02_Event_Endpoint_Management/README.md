@@ -126,6 +126,8 @@ In this part we have
 
 ## Part 2 - Event Consumption
 
+### Introduction
+
 In this part you will play the role of an application developer that would like to consume an event made available.
 You will browse the event source in a catalog and will subscribe to the topic to which you would like to consume event.
 
@@ -137,6 +139,8 @@ If you would like to test the consumption of the event, it is possible to use th
 
 > Note that you could use any Kafka client 
 
+### Labs 
+
 1. Login in EEM using the user **EEM-user** 
 
 We will use the user **EEM-user** to experience the application developer view: the application developer is authorized to only access the catalog.
@@ -145,8 +149,58 @@ Logout if not already done, by clicking on the user icon on the top right corner
 ![](resources/images/logout.png)
 
 Login using the following credentials:
-- eem_user: "eem-admin"
+- eem_user: "eem-user"
 - eem_pwd: "****"
+
+2. Select the catalog view 
+![](resources/images/topic_selection.png)
+On the catalog view, you can see all the available event source (Topic) that have been published.
+
+> Advanced capabilities in term of who can see what event sources and group event sources under a specific product are provided by the API Connect Developer portal.
+
+The API Connect developer portal can be integrated with EEM. If you would like to have more information on that details, please look at the lab ***** //TODO: provide the link to the lab
+
+3. Click on the TOPIC 
+
+Click on the TOPIC that you documented on the previous section of this lab.
+Here the "PR.TEST" has been selected.
+
+![](resources/images/topic_discovery.png)
+
+You can review information about the topic: what is the schema associated to the event and you can click on message sample to get an example of message.
+
+The application developer can here copy the Kafka endpoint to be used by the Kafka client application. 
+The endpoint ca certificate can be downloaded to allow clients to be configured with the expected client certificate to trust.
+
+![](resources/images/topic_endpoint.png)
+
+Note that the Kafka endpoint provided here is the **gateway endpoint** and not the EventStreams kafka endpoint.
+The application developer will use this endpoint and the kafka cluster is hidden behind the gateway.
+
+4. click on "Generate access credentials"
+
+
+
+![](resources/images/topic_gen_creds.png)
+
+This will generate the required credentials for the Kafka client application. 
+
+![](resources/images/contact_details.png)
+
+Here you will need to provide the details of the contact.
+> This information can be used later by the event provider team to easily contact the application developer.
+The event provider team can browse the different subscription for a Topic and see who to contact.
+
+5. Click "generate"
+
+![](resources/images/access_credentials.png)
+
+The credential generated is a SASL username and password, which uniquely identifies you and your usage of this event source (topic). These credentials must be used when accessing the event source through the Event Gateway.
+
+> [!NOTE]  
+> The current supported authentication with the gateway is PLAIN SASL_SSL. 
+
+
 
 The EEM administrator will manage the **Topics, Clusters, and Event gateways**
 Also will published the topics that will be visible to developers 
