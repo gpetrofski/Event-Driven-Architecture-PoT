@@ -4,6 +4,8 @@ This document serves as a resource accompanying the presentations and Proof of T
 
 As you explore this documentation, you'll gain a deeper understanding of Event Streams, its pivotal role as a Kafka broker, and its significance within our overall architecture. We encourage you to delve into the details to fully comprehend the foundation on which our Kafka solutions are built.
 
+![IBM Event Streams](resources/IBM_Event_Streams.png)
+
 ## Event Streams: Introduction
 
 Event Streams is an event-streaming platform based on the [Apache Kafka®](https://kafka.apache.org/) project and incorporates the open-source [Strimzi](https://strimzi.io/) technology.
@@ -38,10 +40,9 @@ In this lab, we are going to introduce you to IBM Event Streams. After this lab,
 
 - Explore the User Interface
 - Create a Kafka Topic
-- Generate credentials
+- Generate SCRAM credentials
 - Produce a message
 - Browse a message
-- Monitor messages
 
 For this lab, we already provided the necessary environments and user credentials to access the environments. The details for accessing the provided environments will be shared with you separately.
 
@@ -57,11 +58,13 @@ The _URL_ for Event Streams should have been provided seperately. Navigate to th
 
 ![Log In](resources/Log_In.png)
 
-Select _IBM provided credentials_ and enter the provided _username & password_ and click Log in.
+> Select _IBM provided credentials_ and enter the provided _username & password_ and click Log in.
 
 > <font size="1">**[Event Streams Username]**</font><br><font size="1">**[Event Streams Password]**</font>
 
 You should now be logged in and see the _Welcome to Event Streams_ page. You are now ready to start the lab.
+
+---
 
 #### Explore Event Streams UI
 
@@ -216,20 +219,262 @@ You will be navigated to the topics page, and hopefully your newly created topic
 
 **Congratulations**! You have just created your first Kafka topic.
 
-### 3. Generate Credentials
+---
 
-Now that we created our very first Kafka topic, let's move on and put our Kafka topic to use. To be able to actually reach our topic from outside and put messages on the topic, we need to connect to our cluster in a secure way.
+### 3. Generate SCRAM credentials
 
-Each Kafka listener exposing an authenticated connection to Event Streams requires credentials to be presented when connecting. SCRAM-SHA-512 and Mutual TLS authentication credentials are created by using a KafkaUser custom resource
+Now that we created our very first Kafka topic, let's move on and put our Kafka topic to use. To be able to actually reach our topic from outside the cluster and put messages on the topic, we need to connect to our cluster in a secure way.
 
-Let's create the credentials for reaching our cluster securely.
+You can secure your Event Streams resources by managing the access each user and application has to each resource.
+
+An Event Streams cluster can be configured to expose any number of internal or external Kafka listeners. These listeners provide the mechanism for Kafka client applications to communicate with the Kafka brokers. The bootstrap address is used for the initial connection to the cluster. The address will resolve to one of the brokers in the cluster and respond with metadata describing all the relevant connection information for the remaining brokers.
+
+Each Kafka listener providing a connection to Event Streams can be configured to authenticate connections with Mutual TLS, SCRAM-SHA-512, or OAuth authentication mechanisms.
+
+> For more information on managing access, navigate to: [Managing Access](https://ibm.github.io/event-automation/es/security/managing-access/)
+
+For this lab, we will use SCRAM credentials to access our resources.
+Let's now create the credentials for reaching our cluster securely.
 
 From the **Topics** page, locate your previously created topic.
 
-> Navigate to **Topics** and click on your **Topic**
+> Navigate to **Topics** in the menu and click on your newly created **Topic** in the list of topics
 
 ![Connect Topic](resources/Connect_Topic.png)
 
 > Click on **Connect to this topic**
 
-The topic connection information should now display.
+The topic connection information should now be displayed.
+The user interface allows us to easily create a Kafka user and generate SCRAM credentials.
+
+![Generate SCRAM](resources/Generate_SCRAM.png)
+
+> Stick to 'External' to use the external Kafka listener and click on **'Generate SCRAM credentials'**.
+
+![Generate SCRAM Credentials](resources/Generate_SCRAM_Credentials.png)
+
+> Give your credentials a meaningful name, e.g. If my name would be John Doe, I would name my credentials: **jod-pot-credentials**.
+> Select **'Produce and consume messages, and read schemas'** and click **'Next'**.
+
+![Generate SCRAM Topic](resources/Generate_SCRAM_Topic.png)
+
+> Select **'A specific topic'** and fill in your **previously created topic** name. Now, click **'Next'**.
+
+This will allow us to create credentials that only have access to produce and consume messages to the topic we created earlier.
+
+![Generate SCRAM Consumer](resources/Generate_SCRAM_Consumer.png)
+
+> Keep the defaults **'All consumer groups'** and click **'Next'**.
+
+![Generate SCRAM Transactional](resources/Generate_SCRAM_Transactional.png)
+
+> Keep the defaults **'No transactional IDs'** and click **'Generate credentials'**.
+
+![Generate SCRAM Generated](resources/Generate_SCRAM_Generated.png)
+
+> Copy the **Bootstrap URL**, **SCRAM username** and **SCRAM password** that have been generated, and keep them somewhere locally for later use.
+
+The SCRAM credentials have now been generated. We will now be able to securely connect to our Kafka cluster and produce and consume messages onto the topic we created.
+
+As a last step, let's download the PEM certificate that we will also need for consuming messages later.
+
+![Generate SCRAM PEM](resources/Generate_SCRAM_PEM.png)
+
+> Click on **Download certificate** in the **PEM certificate** box.
+
+Now, let's move to the next section, where we will use these generated credentials to start producing messages.
+
+---
+
+### 4. Produce a message
+
+To produce a Kafka message, we need a bootstrap URL, a topic and a set of credentials that have access to produce messages on that topic. In the previous section, we created SCRAM credentials with access rights to produce messages on our previously created topic.
+
+For the purpose of this lab, we exposed a REST endpoint on [API Connect](https://www.ibm.com/products/api-connect), that allows you to produce a new message.
+
+[API Connect](https://www.ibm.com/products/api-connect) is an API Management solution and is part of IBM's integration portfolio. With API Connect, we can manage the entire lifecycle of our API's. API Connect offers different tools to allow you to build, test and monitor your API's and securely expose them through our [DataPower gateway](https://www.ibm.com/products/api-connect/api-gateway).
+
+> For more information on API Connect, navigate to: [API Connect Documentation](https://www.ibm.com/docs/en/api-connect/10.0.5.x_lts).
+
+---
+
+#### Logging in to IBM API Connect and request access to producer API
+
+The _URL_ for API Connect should have been provided seperately. Navigate to the user interface and you should be navigated automatically to the login page, if you didn't login previously.
+
+> <font size="1">**[API Connect URL]**</font>
+
+![APIC Sign In](resources/APIC_Login.png)
+
+> Enter the provided _username & password_ and click **Sign in**.
+
+> <font size="1">**[API Connect Username]**</font><br><font size="1">**[API Connect Password]**</font>
+
+You should now be logged in and see the _API Connect Developer Portal_.
+
+![APIC Developer Portal](resources/APIC_Developer_Portal.png)
+
+You should see one or more products on the developer portal dashboard after logging in. For this lab, we will use the KafkaProducer product, which contains the API we need for producing messages on a topic.
+
+> Select the **KafkaProducer** product.
+
+![APIC Select API](resources/APIC_Select_API.png)
+
+> Select the **KafkaProducer** API.
+
+![APIC Get Access](resources/APIC_Get_Access.png)
+
+> Select **Get Access** in the upper right corner.
+
+![APIC Default Plan](resources/APIC_Default_Plan.png)
+
+> Click **Select** on the **Default Plan**.
+
+![APIC Create App](resources/APIC_Create_App.png)
+
+> Click **+ Create Application**.
+
+![APIC Create App](resources/APIC_Create_App_Info.png)
+
+> Choose a **Title** and **Description** for your application. For this lab, we'd recommend using your **initials** followed by **POT**, e.g. **JOD POT**. Now, click **Save**.
+
+![APIC App Credentials](resources/APIC_App_Credentials.png)
+
+Your API Connect APP Credentials have been generated, which can now be used to access the KafkaProducer API.
+
+> Close the **Credentials for your new application** modal.
+
+![APIC Select Created App](resources/APIC_Select_Created_App.png)
+
+> Select your newly created **App**.
+
+![APIC Confirm Subscription](resources/APIC_Confirm_Subscription.png)
+
+> Select **Next** to confirm your subscription.
+
+![APIC Subscription Complete](resources/APIC_Subscription_Complete.png)
+
+> Select **Done** to finish.
+
+---
+
+#### Produce a Kafka message
+
+You should now have been redirected to the Kafka Producer Overview page.
+
+![APIC Post Request](resources/APIC_POST.png)
+
+> Select the **POST /jsonmessage/{topicName}** request on the left.
+
+![APIC Try It](resources/APIC_Try_It.png)
+
+> Click **Try it**.
+
+![APIC Select Key](resources/APIC_Select_Key.png)
+
+> Make sure the **API Key** that you previously created is selected, e.g. **JOD POT**.
+
+![APIC Parameters](resources/APIC_Parameters.png)
+
+The last step to produce a message on our Kafka topic is to provide the Kafka user credentials, topic name and of course the message body.
+
+In the previous section, you should have taken a copy of the Kafka credentials that you created, e.g. **jod-pot-credentials**.
+
+Fill in your username, password, topic name and also provide a message body. As an example you could use our sample message body:
+
+`{
+    "id": "a8651c18-5360-43a3-ae08-98130a845ed4",
+    "orderid": "839096ce-c16e-41f2-8842-69350c6ca0e2",
+    "canceltime": "2023-10-25 13:00:00.000",
+    "reason": "BADFIT"
+}`
+
+> Fill in the **Kafka username** and **Kafka password**. Also provide the **topic name**, and provide a sample **message body**. Now, click **Send**.
+
+Hopefully, you should have received a response with **status code 200**, indicating that the message was correctly produced. You should also see the response message. The response contains relevant metadata of the message, like the timestamp, offset, partition and topic.
+
+![APIC Response](resources/APIC_Response.png)
+
+Congratulations! You have now officially produced a message on your Kafka topic.
+
+Let's now explore how to browse our messages on a topic.
+
+---
+
+### 5. Browse messages
+
+In this section we will explore how to browse messages on a topic. We will use two different approaches.
+
+The first approach is to use a consumer application that we created for the purpose of this lab. This application will allow us to connect to our Kafka topic and consume and display messages in real-time.
+
+The second approach is to use the Event Streams interface, which allows us to explore messages on a topic and see relevant information about the messages, as well as see information about the consumers-groups that are consuming messages.
+
+---
+
+#### First Approach: Kafka Demo App
+
+The _URL_ for the Kafka Demo App should have been provided seperately.
+
+> <font size="1">**[Kafka Demo App URL]**</font>
+
+![Kafka Demo App](resources/Kafka_Demo_App.png)
+
+> Open the Kafka Demo App and fill in the required connection details: _Kafka Broker URL (Bootstrap URL)_, _Topic_, _Kafka username_ and _Kafka password_. Select _SCRAM-SHA-512_ as the Security mechanism and upload your previously downloaded _PEM certificate_. Now, click **Connect to Kafka**.
+
+> <font size="1">**[Event Streams Broker]**</font><br><font size="1">**[Event Streams Topic]**</font><br><font size="1">**[Event Streams Password]**</font><br><font size="1">**[Event Streams Security Mechanism]**</font><br><font size="1">**[Event Streams PEM Certificate]**</font>
+
+If all goes well, you should now be able to see your previously produced message(s) on your topic.
+
+![Kafka Demo App Messages](resources/Kafka_Demo_App_Messages.png)
+
+> Feel free to produce a couple more messages using API Connect to see the messages being consumed in real-time!
+
+---
+
+#### Second Approach: Event Streams User Interface
+
+In the second approach, we will explore the messages we just produced, using the Event Streams user interface. We will also take a look at the consumers.
+
+> Open the **Event Streams** user interface that we used to create our topic and make sure you are logged in.
+
+> <font size="1">**[Event Streams URL]**</font>
+
+Navigate to Topics, and locate your topic.
+
+![Topics](resources/Topics.png)
+
+> Click **Topics** in the menu, and **select your topic** to open your topic.
+
+![Event Streams Messages](resources/Event_Streams_Messages.png)
+
+When you first opened this page to create credentials, there where no messages on the topic. Now you should see at least one message (The one you produced using API Connect).
+
+From here, you can select a specific message, jump to messages by time and see some relevant fields like partition, offset and timestamp of the message.
+
+> Now, **click** on one of the messages in the list.
+
+![Event Streams Message Details](resources/Event_Streams_Message_Details.png)
+
+Here, you will find more information about the selected message in more detail. You will see the Partition, Offset, Date and Time as well as the Headers.
+
+At the bottom, you will also see the message payload (formatted and raw).
+
+> Next, click on **Consumer Groups** at the top.
+
+![Event Streams Consumer Groups](resources/Event_Streams_Consumer_Group_Stable.png)
+
+You should see at least one consumer group, as we previously connected to the topic using the Kafka Demo App.
+
+> Click on one of the **consumer-groups**
+
+![Event Streams Consumer Details](resources/Event_Streams_Consumer_Details.png)
+
+Here, you will see relevant information about the consumers that have joined the consumer group, like the amount of active members, unconsumed paritions and current state.
+
+For each consumer, you should also see the current offset, log end offset and offset lag. This information can be really useful to monitor the state of your Kafka cluster. For instance, if the lag increases, it can indicate performance issues, or issues with your consumers.
+
+---
+
+#### Recap
+
+In this lab, we used Event Streams as our Kafka broker. We explored the user interface, created a Kafka topic and credentials and showed you how to explore Kafka messages through the user interface. We also tested the producing capabilities through API Connect and displayed the messages in real-time by connecting with the Demo Kafka App.
