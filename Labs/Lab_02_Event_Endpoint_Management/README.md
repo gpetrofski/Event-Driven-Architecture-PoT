@@ -20,6 +20,9 @@ In this lab you will discover the main capabilities provided by the Event Endpoi
 We are also providing an optional lab that explain how API Connect, our API Management solution, integrates with our Event Endpoint Management solution.
 In this lab you will see how EEM can leverage the API Connect developer portal to provide a much more richer consumer experience.
 
+> [!IMPORTANT]
+> if you have an unauthorized message, this can be due to the fact that you have been signed out after a non activity on the UI. Please refresh the UI and re-authenticate.
+
 ## Part 1 - TOPIC Authoring
 
 In this part, you will describe the Topic that has been created in the Event Streams Lab1 and publish it to make it available to the application developer in the EEM catalog.
@@ -40,9 +43,15 @@ To achieve those task you will need to login in EEM as an author user.
 This section allows the user to describe the Topic that are available on a Kafka cluster.
 The connection configuration to the EventStreams Kafka cluster has already been configured in EEM.
 
-You will describe the Topic that you have configured in the first lab in EventStream, in my case, the TOPIC was "PR.TEST".
+You will describe the **Topic that you have configured in the first lab in EventStream**. 
 
-In the following figure we can see that the TOPIC "PR.TEST" has been created in EventStreams:
+> [!WARNING]
+> Note that for this PoT we had recommended using your initials followed by a . and ending by POT. Like "PR.POT".
+
+The TOPIC name used to illustrate this lab is "PR.TEST", however.
+
+
+In the following figure we can see that the TOPIC "GEP.POT" has been created in EventStreams:
 ![](resources/images/ES_Topic.png)
 
 3. Click on the "Add topic" button
@@ -139,7 +148,7 @@ If you would like to test the consumption of the event, it is possible to use th
 
 > Note that you could use any Kafka client 
 
-### Labs 
+### Create Subscription lab
 
 1. Login in EEM using the user **EEM-user** 
 
@@ -169,6 +178,7 @@ Here the "PR.TEST" has been selected.
 
 You can review information about the topic: what is the schema associated to the event and you can click on message sample to get an example of message.
 
+4. Copy the Gateway Endpoint
 The application developer can here copy the Kafka endpoint to be used by the Kafka client application. 
 The endpoint ca certificate can be downloaded to allow clients to be configured with the expected client certificate to trust.
 
@@ -177,9 +187,9 @@ The endpoint ca certificate can be downloaded to allow clients to be configured 
 Note that the Kafka endpoint provided here is the **gateway endpoint** and not the EventStreams kafka endpoint.
 The application developer will use this endpoint and the kafka cluster is hidden behind the gateway.
 
-4. click on "Generate access credentials"
+Copy the endpoint, it will be used at a later stage when we will test the consumption of the events.
 
-
+5. click on "Generate access credentials"
 
 ![](resources/images/topic_gen_creds.png)
 
@@ -191,17 +201,103 @@ Here you will need to provide the details of the contact.
 > This information can be used later by the event provider team to easily contact the application developer.
 The event provider team can browse the different subscription for a Topic and see who to contact.
 
-5. Click "generate"
+6. Click "generate"
 
 ![](resources/images/access_credentials.png)
 
-The credential generated is a SASL username and password, which uniquely identifies you and your usage of this event source (topic). These credentials must be used when accessing the event source through the Event Gateway.
+The credential generated is a SASL username and password, which uniquely identifies you and your usage of this event source (topic). These credentials must be used when accessing the event source through the Event Gateway. The Event Gateway is using it's own credentials to access the Kafka Cluster and it has already been configured for you.
+
 
 > [!NOTE]  
-> The current supported authentication with the gateway is PLAIN SASL_SSL. 
+> The current supported authentication with the gateway is PLAIN SASL_SSL.
+>
+> PLAIN relies on a combination of username and password to log in over a TLS connection, meaning that your traffic is encrypted.
+>
+> Simple Authentication and Security Layer (SASL) 
 
 
+7. Save the credentials
 
+> [!WARNING]
+> Copy the username and password here. The password can't be retrieved once the window is closed. You can choose to download the credentials as JSON for reuse.
+
+You can now close the window.
+
+8. Select subscription
+
+Navigate to the subscription tab
+![](resources/images/Subscription_user.png)
+
+On this page you can see all the subscription that has been made by the application developer user (the user used to authenticate on the UI).
+
+![](resources/images/subscription_user_view.png)
+
+> [!NOTE]
+> You have also the option here to delete a subscription if it is no more required.
+
+> [!IMPORTANT]
+> A subscription that is removed can't be restored. Once the subscription has been deleted the application using those credentials will not be able to consume event from TOPIC.
+
+### Event consumption
+
+This part demonstrate how to consume event from the TOPIC using the information provided by the Event Endpoint Management. 
+The Kafka client application will consume the messages through the EEM Event Gateway.
+
+In order to consume an event from Kafka you will need the following information that you have already gathered in the previous part:
+- **Broker**: this corresponds to the Kafka Endpoint which in this case is the **event gateway endpoint**. It can be retrieved on the TOPIC description in the EEM catalog section.
+
+![](resources/images/evtgw_ep.png)
+
+- **certificate**: this is the certificate that Kafka needs to trust the endpoint that you are going to connect to. It can be retrieved on the TOPIC description in the EEM catalog section. Just on th right side of the event gateway endpoint (see Broker above).
+
+- **TOPIC**: this corresponds to the topic that you have subscribed to in the previous section using the EEM catalog.
+- **user**: this value has been generated when you subscribed to the TOPIC on the EEM UI.
+- **password**: this value has been generated when you subscribed to the TOPIC on the EEM UI.
+- **Security Mechanism**: The gateway is currently only supporting the security PLAIN 
+
+We have provided a user interface to consume events from a Kafka topic. The user interface is using WebSocket to receive update from the backend server that is connected to Kafka using Kafka protocol.
+
+1. Access the consumer tool that we have provided for this PoT at the following URL:
+[http://kafka-consumer-app-ui-event.cp4i21-5b7e0d81360e5972646d63308bd04bf7-0000.eu-de.containers.appdomain.cloud/](http://kafka-consumer-app-ui-event.cp4i21-5b7e0d81360e5972646d63308bd04bf7-0000.eu-de.containers.appdomain.cloud/)
+
+![](resources/images/kafka_consumer_ui.png)
+
+2. Provide the required parameters using the information that you retrieved from the Event Endpoint Management UI (see [Topic Authoring](#Part 1 - TOPIC Authoring) : Broker (servers from EEM), TOPIC, user, password, the **security mechanism "PLAIN"** and the certificate.
+//TODO ref to part 1
+
+![](resources/images/kafka_consumer_filled.png)
+
+3. Click the button "Connect to Kafka"
+
+You should not see any error and your client application is now listening for events on the selected TOPIC.
+If you haven't 
+
+You should see the events arriving on your window.
+
+
+With the information that you gathered through the catalog section of the EEM UI, you have been able to access and consume events for this specific TOPIC without the need to contact any administrator or IT team.
+
+
+**Using the starter application**
+>[!NOTE]
+>This part is intended for the more technical people. //TODO : web app ?
+
+Return to the folder where you have downloaded the required file for the starter application.
+If you haven't prepared the starter application, go back to the event streams lab on section //TODO: section for the starter app
+
+Update the kafka.properties file with the credentials that you have copied/stored:
+
+```sh
+keytool -import -alias evtgw -keystore truststore.p12 -file
+keytool -list -v -keystore truststore.p12
+
+``` 
+
+
+>[!NOTE]
+>Your credentials can be found in the json file that you have downloaded if you opted for this option.
+
+# END 
 The EEM administrator will manage the **Topics, Clusters, and Event gateways**
 Also will published the topics that will be visible to developers 
 
