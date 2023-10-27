@@ -2,8 +2,6 @@
 
 This document serves as a resource accompanying the presentations and Proof of Technology event around IBM Event Automation. It is designed to provide insights and hands-on experience for the Event Streams capability, which acts as the backbone of our event-driven architecture.
 
-As you explore this documentation, you'll gain a deeper understanding of Event Streams, its pivotal role as a Kafka broker, and its significance within our overall architecture. We encourage you to delve into the details to fully comprehend the foundation on which our Kafka solutions are built.
-
 ![IBM Event Streams](resources/IBM_Event_Streams.png)
 
 ## Event Streams: Introduction
