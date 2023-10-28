@@ -14,7 +14,7 @@ The Event Gateway is independent of your Kafka clusters, making access control t
 In this lab you will discover the main capabilities provided by the Event Endpoint Management. 
 - Part 1 - TOPIC Authoring: you will start as an EEM administrator and you will describe the topic that you created in the event streams lab and you will publish it to make it available to consumers. 
 - Part 2 - Event Consumption: once the topic has been described and published, as an application developer, you will access the catalog to discover what event source are made available and you will subscribe to an event source.
-- Part 2 - Event Management: Finally as an EEM administrator you will review the subscription and revoke the access.
+- Part 3 - Event Management: Finally as an EEM administrator you will review the subscription and revoke the access.
 
 // TODO: check the following
 We are also providing an optional lab that explain how API Connect, our API Management solution, integrates with our Event Endpoint Management solution.
@@ -35,7 +35,7 @@ To achieve those task you will need to login in EEM as an author user.
 - eem_user: "eem_admin"
 - eem_pwd: "********"
 
-![](resources/images/eem_login_admin.png)
+  <img src="resources/images/eem_login_admin.png" alt="drawing" width="400"/>
 
 2. Got to the Topic section on the UI
 ![](resources/images/eem_topic_tab.png)
@@ -51,15 +51,16 @@ You will describe the **Topic that you have configured in the first lab in Event
 The TOPIC name used to illustrate this lab is "PR.TEST", however.
 
 
-In the following figure we can see that the TOPIC "GEP.POT" has been created in EventStreams:
-![](resources/images/ES_Topic.png)
+In the following figure we can see that the TOPIC "GEP.POT" has been created in EventStreams:  
+ <img src="resources/images/ES_Topic.png" alt="drawing" width="300"/>
 
 3. Click on the "Add topic" button
 4. In the cluster selection click the event stream kafka cluster [clusterName] and click the button "Next" // TODO: add the cluster name  
 5. Select the TOPIC that you have created
 EEM has connected to the Kafka cluster and provide you the list of Kafka TOPIC that are available on the cluster.
-Select the topic that you created in the event streams lab. In my case it is the "PR.TEST" topic as you can see in the following figure:
-![](resources/images/EEM_Topic_selection.png)
+Select the topic that you created in the event streams lab. In my case it is the "PR.TEST" topic as you can see in the following figure:  
+
+ <img src="resources/images/EEM_Topic_selection.png" alt="drawing" width="300"/>
 
 You have the possibility to change the Topic name that will be displayed to the application developer. For this lab, we will keep it as is. 
 
@@ -69,27 +70,27 @@ You have the possibility to change the Topic name that will be displayed to the 
 ![](resources/images/topic_add.png)
 
 8. Click on the "Edit Information" button
-
 ![](resources/images/20edit_topic.png)
 
-The event source information that we will provide corresponds to the **new customer** event that we have used in the event streams lab. 
+    The event source information that we will provide corresponds to the **new customer** event that we have used in the event streams lab. 
 
-**Overview Information**
+    - **Overview Information**
 
-Provide a topic description such as for example: 
-```
-New customer registrations from the customer management system.
-```
-You can also provide a tag to group related event. Provide as tag "retail"
+    Provide a topic description such as for example: 
+    ```
+    New customer registrations from the customer management system.
+    ```
+    You can also provide a tag to group related event. Provide as tag "retail"
 
 ![](resources/images/topic_overview_info.png)
 
-**Event Information**
+- **Event Information**
 
 Download the new customer avro schema available at the following link: 
 [newcustomer](resources/assets/new_customer.avsc).
 Upload the schema by selecting the downloaded schema.
-The schema should be uploaded and validated correctly:
+The schema should be uploaded and validated correctly:  
+
 ![](resources/images/avroUploaded.png)
 
 It is also possible to provide a message example in the sample.
@@ -114,8 +115,8 @@ We are now ready to publish the topic that we have described.
 ![](resources/images/topic_publish.png)
 
 12. Select the "gateway-group" and click on the button "Publish topic"
+  <img src="resources/images/topic_publish_gw.png" alt="drawing" width="200"/>
 
-![](resources/images/topic_publish_gw.png)
 
 A message information should be displayed telling that the topic has been published.
 The topic is now published on the EEM catalog and is made available for application developer.
@@ -194,8 +195,7 @@ Copy the endpoint, it will be used at a later stage when we will test the consum
 ![](resources/images/topic_gen_creds.png)
 
 This will generate the required credentials for the Kafka client application. 
-
-![](resources/images/contact_details.png)
+<img src="resources/images/contact_details.png" alt="drawing" width="200"/>
 
 Here you will need to provide the details of the contact.
 > This information can be used later by the event provider team to easily contact the application developer.
@@ -203,7 +203,8 @@ The event provider team can browse the different subscription for a Topic and se
 
 6. Click "generate"
 
-![](resources/images/access_credentials.png)
+<img src="resources/images/access_credentials.png" alt="drawing" width="300"/>
+
 
 The credential generated is a SASL username and password, which uniquely identifies you and your usage of this event source (topic). These credentials must be used when accessing the event source through the Event Gateway. The Event Gateway is using it's own credentials to access the Kafka Cluster and it has already been configured for you.
 
@@ -270,64 +271,153 @@ We have provided a user interface to consume events from a Kafka topic. The user
 3. Click the button "Connect to Kafka"
 
 You should not see any error and your client application is now listening for events on the selected TOPIC.
-If you haven't 
 
-You should see the events arriving on your window.
+![](resources/images/kafka_connected.png)
 
+You should see messages coming on the right side:
 
-With the information that you gathered through the catalog section of the EEM UI, you have been able to access and consume events for this specific TOPIC without the need to contact any administrator or IT team.
+![](resources/images/kafka_meesage.png)
 
+The first time that the consumer application is started, the application will consume all the messages from the beginning of the TOPIC.
 
-**Using the starter application**
->[!NOTE]
->This part is intended for the more technical people. //TODO : web app ?
+---
+> [!NOTES]
+> Some information on the consumer group Id
 
-Return to the folder where you have downloaded the required file for the starter application.
-If you haven't prepared the starter application, go back to the event streams lab on section //TODO: section for the starter app
+The gateway is connecting to the Kafka broker using a new group id using the following pattern: `<ClientId>-<UserName>-<GroupId>`.  
+The ClientId, UserName and GroupId is the value provided by the KafkaClient.   
+The consumer application is configured with 
+- ClientId: "demoConsumerApp"
+- UserName: this is the user provided through the user interface
+- GroupId: <username>-<topic>
 
-Update the kafka.properties file with the credentials that you have copied/stored:
+If you navigate to the event streams UI, select the topic and then look at the consumer groups you will see your groupId for the application consumer
+![](resources/images/ConsumerGroup.png)
 
-```sh
-keytool -import -alias evtgw -keystore truststore.p12 -file
-keytool -list -v -keystore truststore.p12
+This approach provide a security protection by avoiding that an external application joins an existing group and interferes with the application currently consuming the events.
 
-``` 
+---
 
+You can send new messages by taking back the rest API provided through API Connect.
 
->[!NOTE]
->Your credentials can be found in the json file that you have downloaded if you opted for this option.
+>1. Login into the API Connect developer portal (//TODO link) 
+>2. Select the KafkaProducer API product
+>3. Select POST jsonmessage request
+>4. select tryit
+>5. add a message and send
 
-# END 
-The EEM administrator will manage the **Topics, Clusters, and Event gateways**
-Also will published the topics that will be visible to developers 
+4. Change the TOPIC name   
+Try to consume messages from another TOPIC available in EventStreams through the event gateway using the same credentials.  
+    - Disconnect to Kafka
+    - Change the TOPIC name to **CANCELLATIONS**
+    - Click on the button **connect to kafka**
+The consumer application is throwing an connection error to Kafka:
 
-// TODO: explain the different user role  
-    
-![EEM UI](./resources/images/eem_ui.png)
+![](resources/images/topic_error_connection.png)
 
+The credential that you have received only allows to connect to the TOPIC to witch you have subscribed.
 
-Catalog
-
-The catalog lists all available topics that represent event sources. Kafka administrators can check what topics are published and made available to others in the organization. Application developers in your organization can use the catalog to browse the available topics, and to view more information about each of them, including a description, tags, sample messages, schema details if used, and so on, enabling self-service access to the stream of events represented by the topics.
-
-Cluster
-
-Kafka runs as a cluster of one or more servers (Kafka brokers). The load is balanced across the cluster by distributing it amongst the servers.
-
-Event Gateway
-
-Access to the event sources are managed by the Event Gateway. The Event Gateway handles the incoming requests from applications to consume from a topic’s stream of events, routing traffic securely between the Kafka cluster and the application.
-
-The Event Gateway is independent of your Kafka clusters, making access control to topics possible without requiring any changes to your Kafka cluster configuration.
-
-Subscription
-
-Application developers configure their applications to subscribe to the stream of events, providing self-service access to the message content from the event stream, and generating the required credentials for their application to consume from the topic. Kafka administrators can manage subscriptions that are created for their topics in the Event Endpoint Management Topic Detail page.
+5. Change the credentials
 
 
+### Wrap-up
 
-## TOPIC registration
+This conclude the lab of this part.
 
-# LAB 02.1 - Event Endpoint Management with API Connect
+> [!NOTES]
+> Keep your application consumer open you will need it in the next part.
+
+In this part you have used the Catalog section of the EEM UI to select the TOPIC that you would like to consume event from.  
+You have reviewed the information related to your TOPIC.  
+You have subscribe to the TOPIC and received the required credentials to be able to consume events from the TOPIC.
+
+With the consumer application you consumed events from the TOPIC configured on the Event Streams Kafka Broker via the Event gateway.
+
+## Part 3 - Event Management
+
+In this last part of the event endpoint management, you take the role of the EEM admin and we will explore the life cycle of a TOPIC and how to revoke access of a consumer.
+
+### TOPIC LifeCycle
+
+The life cycle overview of a TOPIC is provided at the following picture:
+<img src="resources/images/TOPIC_lifecycle.png" alt="drawing" width="400"/>
+
+
+The topic has three states:
+- Unpublished: the topic has never been made visible in the catalog and published to the event gateway.
+- Published: the topic is visible in the catalog and configured on the gateway. Application developer can subscribe to the topic to consume events.
+- Archived: the topic is either visible in the catalog if there were subscription attached to it, or not visible in the catalog. In the archive stated, if the TOPIC is visible in the catalog, it is not possible for the application developer to subscribe to it.
+
+### Archive the TOPIC
+1. Login to the EEM UI with the admin user.
+//TODO provide the admin user
+2. Click on TOPIC  
+<img src="resources/images/topic_section.png" alt="drawing" width="200"/>
+
+3. Select your TOPIC
+4. Click on "Manage"
+![](resources/images/topic_manage_arch.png)
+In the subscribers section, you can see all the subscription for this specific TOPIC.
+The application developer contact information is available here.
+5. Click "Archive Topic"
+![](resources/images/archive_topic.png)
+
+As you still have your subscription attached to the topic, the TOPIC is now in the state **Archived**.
+
+![](resources/images/topic_archived.png)
+
+It is still visible in the catalog but new application developers are not allowed to subscribe.
+6. Navigate to the "Catalog" section and select your TOPIC
+![](resources/images/subscription_disabled.png)
+
+7. Open your consumer application  
+You can validate that existing application can still consume events from the topic, disconnect and reconnect to the topic.
+You can test by sending events to the topic and see that the consumer application can still receive messages. //TODO ref to the lab.  
+The steps for sending the events are summarized here (you can get the details at the first lab ()https://github.com/gpetrofski/Event-Driven-Architecture-PoT/tree/main/Labs/Lab_01_Event_Streams#4-produce-a-message)):
+
+>1. Login into the API Connect developer portal (//TODO link) 
+>2. Select the KafkaProducer API product
+>3. Select POST jsonmessage request
+>4. select tryit
+>5. add a message and send
+
+### Revoke access to the TOPIC
+
+1. Navigate back to the manage section of your TOPIC (point 1,2,3,4 previously)  
+>1. Open back your EEM UI
+>2. Select TOPIC section
+>3. Select your TOPIC
+>4. Select the Manage section
+
+2. Delete/Revoke the subscription
+![](resources/images/revoke.png)
+This removes the subscription to the TOPIC. As there is no other subscription attached to the TOPIC, the state of the TOPIC is now defined as **not published**:
+
+ <img src="resources/images/topic-not_pub.png" alt="drawing" width="400"/>
+
+The consumer application will be disconnected to the TOPIC with the next gateway configuration update with an appropriate error message.  
+The configuration is performed at regular basis.
+//TODO is there a way to force an update ?
+
+3. Open your consumer application
+
+It may not have been yet disconnected from the TOPIC but it should not be able to connect back to the TOPIC.
+
+You can check this by disconnecting your application and connecting it back.
+YOu should see the following error:
+![](resources/images/error_connection.png)
+
+### Wrap-Up
+
+During this lab you have discover the possible lifecycle of a TOPIC within EEM.
+
+In the unpublished state, the TOPIC can be edited and documented. It is not visible to any application developer in the Catalog.  
+When it is published it is made visible in the Catalog and the application developer can subscribe to it and he will receive the required credentials to connect his application to the EventStreams Kafka cluster through the event gateway.  
+The EEM admin can archive the TOPIC. If there is any subscription left to the TOPIC, the topic is still visible in the Catalog but it is not possible to subscribe to the TOPIC. Existing application is not affected by this udpate, they are still able to consume messages.  
+When all subscriptions have been removed the TOPIC move to the unpublished more and it is no more visible in the catalog.  
+EEM admin is able to revoke subscription to a specific TOPIC.
+
+
+# LAB 2.1 - Event Endpoint Management with API Connect
 
 ![](resources/images/EEM_APIC_Architecture.png)
