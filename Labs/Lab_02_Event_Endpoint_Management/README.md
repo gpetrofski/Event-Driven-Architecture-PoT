@@ -289,7 +289,7 @@ The ClientId, UserName and GroupId is the value provided by the KafkaClient.
 The consumer application is configured with 
 - ClientId: "demoConsumerApp"
 - UserName: this is the user provided through the user interface
-- GroupId: <username>-<topic>
+- GroupId: `<username>-<topic>``
 
 If you navigate to the event streams UI, select the topic and then look at the consumer groups you will see your groupId for the application consumer
 ![](resources/images/ConsumerGroup.png)
