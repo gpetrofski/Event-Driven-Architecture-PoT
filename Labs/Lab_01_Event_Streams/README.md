@@ -225,11 +225,18 @@ Now that we created our very first Kafka topic, let's move on and put our Kafka 
 
 You can secure your Event Streams resources by managing the access each user and application has to each resource.
 
-An Event Streams cluster can be configured to expose any number of internal or external Kafka listeners. These listeners provide the mechanism for Kafka client applications to communicate with the Kafka brokers. The bootstrap address is used for the initial connection to the cluster. The address will resolve to one of the brokers in the cluster and respond with metadata describing all the relevant connection information for the remaining brokers.
+An Event Streams cluster can be configured to expose any number of internal or external Kafka listeners. These listeners provide the mechanism for Kafka client applications to communicate with the Kafka brokers.  
+The bootstrap address is used for the initial connection to the cluster. The address will resolve to one of the brokers in the cluster and respond with metadata describing all the relevant connection information for the remaining brokers.
 
-Each Kafka listener providing a connection to Event Streams can be configured to authenticate connections with Mutual TLS, SCRAM-SHA-512, or OAuth authentication mechanisms.
+Event Streams can be configured to authenticate Kafka connections with Mutual TLS, SCRAM-SHA-512, or OAuth authentication mechanisms.
 
 > For more information on managing access, navigate to: [Managing Access](https://ibm.github.io/event-automation/es/security/managing-access/)
+
+--- 
+> [! NOTES]
+> SCRAM stands for Salted Challenge Response Authentication Mechanism. 
+> SCRAM authentication is being used by many other software, like Kafka, MongoDB, database and etc. And it is also being used in some protocols like IMAP and SMTP. When using SCRAM, the password is not sent on the transaction itself, and the password can be kept as a one directional hash. Besides that, SCRAM can be used in conjunction with TLS to prevent ones from the man-in-the-middle attacks.
+--- 
 
 For this lab, we will use SCRAM credentials to access our resources.
 Let's now create the credentials for reaching our cluster securely.
@@ -249,27 +256,32 @@ The user interface allows us to easily create a Kafka user and generate SCRAM cr
 
 > Stick to 'External' to use the external Kafka listener and click on **'Generate SCRAM credentials'**.
 
-![Generate SCRAM Credentials](resources/Generate_SCRAM_Credentials.png)
+<img src="resources/Generate_SCRAM_Credentials.png" alt="drawing" width="400"/>
+
 
 > Give your credentials a meaningful name, e.g. If my name would be John Doe, I would name my credentials: **jod-pot-credentials**.
 > Select **'Produce and consume messages, and read schemas'** and click **'Next'**.
 
-![Generate SCRAM Topic](resources/Generate_SCRAM_Topic.png)
+<img src="resources/Generate_SCRAM_Topic.png" alt="drawing" width="300"/>
+
 
 > Select **'A specific topic'** and fill in your **previously created topic** name. Now, click **'Next'**.
 
 This will allow us to create credentials that only have access to produce and consume messages to the topic we created earlier.
 
-![Generate SCRAM Consumer](resources/Generate_SCRAM_Consumer.png)
+<img src="resources/Generate_SCRAM_Consumer.png" alt="drawing" width="300"/>
+
 
 > Keep the defaults **'All consumer groups'** and click **'Next'**.
 
-![Generate SCRAM Transactional](resources/Generate_SCRAM_Transactional.png)
+<img src="resources/Generate_SCRAM_Transactional.png" alt="drawing" width="300"/>
 
 > Keep the defaults **'No transactional IDs'** and click **'Generate credentials'**.
 
-![Generate SCRAM Generated](resources/Generate_SCRAM_Generated.png)
+<img src="resources/Generate_SCRAM_Generated.png" alt="drawing" width="400"/>
 
+
+> [!WARNING] 
 > Copy the **Bootstrap URL**, **SCRAM username** and **SCRAM password** that have been generated, and keep them somewhere locally for later use.
 
 The SCRAM credentials have now been generated. We will now be able to securely connect to our Kafka cluster and produce and consume messages onto the topic we created.
