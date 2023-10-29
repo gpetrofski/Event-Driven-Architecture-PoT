@@ -1,5 +1,2 @@
-<<<<<<< HEAD
 **/*.creds
-=======
 .DS_Store
->>>>>>> 844bdae (gitignore & DS_Store removed)
