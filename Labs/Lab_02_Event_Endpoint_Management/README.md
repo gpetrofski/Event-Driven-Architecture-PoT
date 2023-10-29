@@ -561,7 +561,7 @@ Your application Credentials have been generated, which will be used to access t
 
  <img src="resources/images/APIC_App_Credentials.png" alt="drawing" width="300"/>
 
->[! WARNING]
+>[!WARNING]
 > The password can not be copied once you acknowledge this window, it can only be reset administratively.  If you missed this part, the easiest way is to create a new application.  
 > Please copy/paste the user and password that has been generated as it will be used in you consumer application.
 
