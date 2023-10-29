@@ -520,12 +520,31 @@ If all goes well, you should now be able to see your previously produced message
 
 ![Kafka Demo App Messages](resources/Kafka_Demo_App_Messages.png)
 
-> Feel free to produce a couple more messages using API Connect to see the messages being consumed in real-time!
+Feel free to produce a couple more messages using API Connect to see the messages being consumed in real-time!
 
+6. Disconnect and re-connect Kafka
+
+Disconnect the consumer application by clicking the **disconnect from Kafka** button and reconnect it by clicking back the **connect to Kafka** button.
+
+You will realized that the application is not reading any messages.  Why?
+
+>[!NOTES]
+> One of the value of Kafka is that messages written to a TOPIC are retained for a specific amount of time (defined at the TOPIC creation) and can't be modified.  
+> This has two advantages:
+> - a consumer application is able to replay all messages in the TOPIC. By default Kafka keeps the last message position (offset) of the application consumer. If the consumer application disconnect and reconnect, Kafka will reposition the cursor of the application consumer where it was before the disconnection. This is the normal behavior of a Kafka consumer and __this is what we have implemented for the provided consumer application__ . It is possible to force the consumer application to restart from the beginning though, this can be useful for specific use cases such as
+>   - an application crashes and you need to replay the log to build a state
+>   - fine tuning an AI model that needs to replay all the events with a modified model
+> - a new consumer application will be able to consume all the messages that have been put in the TOPIC. This is not possible with a queueing messaging solution where the messages are removed if the message has been consumer by an application. 
+
+--- 
+##### OPTIONAL. Connect using another TOPIC
+As you have generate credentials to consume event from a specific topic, you should not be able to access another topic.   
 You can test to connect to another existing TOPIC with the same credentials, for example the **CANCELLATIONS** TOPIC.
 You should receive an authorization error.
  
  ![](resources/images/consumerauthorizationerr.png)
+
+--- 
 
 >[!IMPORTANT]
 >Reconnect your application with your TOPIC to EventStreams, we will use this connection on the last part of the lab.
