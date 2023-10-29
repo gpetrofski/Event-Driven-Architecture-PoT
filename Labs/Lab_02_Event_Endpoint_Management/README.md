@@ -420,4 +420,191 @@ EEM admin is able to revoke subscription to a specific TOPIC.
 
 # LAB 2.1 - Event Endpoint Management with API Connect
 
+## introduction
+
+--- 
+
+[API Connect](https://www.ibm.com/products/api-connect) is an API Management solution and is part of IBM's integration portfolio. With API Connect, we can manage the entire lifecycle of our API's. API Connect offers different tools to allow you to build, test and monitor your API's and securely expose them through our [API gateway](https://www.ibm.com/products/api-connect/api-gateway).
+More information on API Connect can be found at the [API Connect Documentation](https://www.ibm.com/docs/en/api-connect/10.0.5.x_lts).
+
+It appears that addressed by API management for APIs can be similarly applied to some extent for events:
+- Secure access to event
+- Monitor who is consuming what
+- Socialize the event such that application developer knows what events are available and how to consume them. 
+
+When working alongside IBM API Connect, it offers discovery and self-service access to both APIs and events together in one portal.
+
+The  REST API and/or Event API (TOPIC) socialization capabilities in API Connect is more advanced than in Event Endpoint Management. It provides the ability
+- to group TOPICs in *Product* that is life cycled.
+![](resources/images/2023-10-29-10-19-54.png)
+- to set a visibility of a Product to a set of developer organizations only
+- to customize the developer portal interface which is based on Drupal
+
+In API Connect, Event API can only be authored using AsyncAPI, it doesn't provide a TOPIC authoring experience as in Event Endpoint Management.
+
+Therefore, Event Endpoint Management and API Connect have been integrated to provide a strong solution for customers that are looking a much richer socialization experience for their Event or that want to extend their API solution to Event.
+
+In this integration Event Endpoint Management has the following role:
+- Provide the TOPIC authoring. Once the TOPIC has been authored into EEM, it can be imported in API Connect (as AsyncAPI) which can then be managed just like as an API.
+- Provide an administration interface to the Event Gateway: it manages the deployment of the  TOPIC configuration to the event gateway.  
+
+The following figure show this integration
+
 ![](resources/images/EEM_APIC_Architecture.png)
+
+--- 
+
+The purpose of the lab is to discover the developer experience that API Connect provides. 
+We have already imported and deployed the TOPIC into API Connect.  
+
+The lab will consist in the following steps
+- log into the API Connect developer portal
+- discover the TOPIC **CANCELLATIONS** and see that APIs are also available
+- register your consumer application 
+- test the consumption of the Kafka messages from the TOPIC **CANCELLATIONS**.
+
+The TOPIC **CANCELLATIONS** has been packaged into the Product **Jeans-Shopping**.
+The Jeans-Shopping product has been published to the event gateway and into the developer portal.
+The visibility of the product has been set to a specific developer organization **innovative-org**. //TODO set the right org   
+![](resources/images/product_visibility.png)
+
+This means that the product is only visible when you are authenticated and part of the developer organization. 
+
+This also means that **only the developers that are part of this developer organization** will be able **to subscribe and to consume events from this TOPIC**.
+You can limit who is able to see and consume TOPIC that you have published.
+
+## Lab
+1. Navigate to the API Connect Developer portal
+
+Navigate to the developer portal and you should be navigated automatically to the login page, if you didn't login previously.
+//TODO provide the URL
+> <font size="1">**[API Connect URL]**</font>
+
+![](resources/images/APIC_portal_default.png)
+
+2. Select in the menu **API Products**
+
+![](resources/images/APIC_API_Products.png)
+
+As you can find out, there are no product "Jeans-Shopping" in the list.
+As application you can't be aware of the existence of this Product.
+
+2. Click **Sign In** on the developer portal menu
+
+![](resources/images/APIC_Signin_portal.png)
+
+Enter the provided _username & password_
+
+![APIC Sign In](resources/images/APIC_Login.png)
+
+//TODO define the user/password pattern... potuser1 ?   
+//TODO change the screenshot
+
+> <font size="1">**[API Connect Username]**</font><br><font size="1">**[API Connect Password]**</font>
+
+3. click **Sign in**  
+You should now be logged in and see the _API Connect Developer Portal_.  
+You should now be able to see the **Jeans Shopping product**:  
+![](resources/images/APIC_Jeans_shopping_prd.png)
+
+4. Click on the product Jeans Shopping
+
+ <img src="resources/images/2023-10-29-09-17-46.png" alt="drawing" width="400"/>
+
+You can see here the TOPIC available in this product which is **CANCELLATIONS**.   
+On the API CANCELLATIONS box, you can see at the bottom that it corresponds to a Kafka APIs (TOPIC).
+
+5. Click on "CANCELLATIONS 1.0.0"
+
+![](resources/images/2023-10-29-10-11-55.png)
+Unlike APIs that are exposed on the API Connect portal that has a type **OpenAPI**, the exposed Event API here has a type **AsyncAPI**.
+
+An the protocol is defined as **Kafka**.
+
+For example the REST API **KafkaProducer** that you have used before has a type **REST** and a protocol **HTTPS**
+
+![](resources/images/2023-10-29-10-17-06.png)
+
+6. Select the CANCELLATIONS topic and expand the operation Subscribe:
+
+![](resources/images/2023-10-29-09-23-08.png)
+
+The portal provides some code example in different languages that can be directly used.
+
+In the **references** section you can have a view of the schema used and the message layout.
+
+![](resources/images/2023-10-29-09-25-59.png)
+
+7. Click on **Get Access**
+In order to be able to consume from this TOPIC, you need to subscribe your consumer application.
+
+![](resources/images/2023-10-29-09-27-38.png)
+
+8. Click **Select** in the default plan
+
+ <img src="resources/images/2023-10-29-09-29-02.png" alt="drawing" width="400"/>
+
+9. Click **Create Application**
+
+![](resources/images/2023-10-29-09-34-51.png)
+
+By creating an application, API Connect will creates the associated credentials that will be used when subscribing to a TOPIC.  
+Once the application created it is possible to use this application to subscribe to any available TOPIC. The same credentials will be used.  
+
+Choose a **Title** and **Description** for your application. 
+For this lab, we'd recommend using your **initials** followed by **POT**, e.g. **JOD POT**.  
+
+ <img src="resources/images/APIC_Create_App_Info.png" alt="drawing" width="300"/>
+
+10. click **Save**.
+Your application Credentials have been generated, which will be used to access the TOPIC.
+
+ <img src="resources/images/APIC_App_Credentials.png" alt="drawing" width="300"/>
+
+>[! WARNING]
+> The password can not be copied once you acknowledge this window, it can only be reset administratively.  If you missed this part, the easiest way is to create a new application.  
+> Please copy/paste the user and password that has been generated as it will be used in you consumer application.
+
+
+11. Close the **Credentials for your new application** modal.
+12. Select your newly created **App**.
+![APIC Select Created App](resources/images/APIC_Select_Created_App.png)
+
+13. Select **Next** to confirm your subscription.
+
+![](resources/images/2023-10-29-09-51-59.png)
+
+14. Select **Done** to finish.
+
+You are now subscribed to the TOPIC.   
+We will now consume events with the generated credentials.   
+
+15. Open again the Subscribe are on the portal and copy the bootstrap server
+
+![](resources/images/2023-10-29-09-56-38.png)
+
+Copy the bootstrap servers. 
+As you can view, this is the **Event Gateway** end point.
+
+16. Open the consumer application that you have used before.
+
+![](resources/images/2023-10-29-10-04-40.png)
+
+Fill the parameters:
+- broker: the bootstrap server that you copied at point 15
+- Topic: **CANCELLATIONS**
+- UserName & Password from point 10
+- Security Mechanism: **PLAIN**
+- Certificate: reuse the certificate that you downloaded from the previous lab
+
+17. Click **Connect to Kafka**
+![](resources/images/2023-10-29-10-08-50.png)
+
+You are receiving messages from CANCELLATIONS !
+
+## Wrap-up
+
+In this lab we have use the API Connect developer portal to browse the available TOPIC that has been published on the the Event Gateway.   
+We registered an application in the developer portal which provided credentials associated to the application.   
+We then subscribed the application to the TOPIC **CANCELLATIONS**. This configured on the event gateway the application authentication and authorization with the provided credentials.  
+We then used the consumer application to consume events from the TOPIC.   
