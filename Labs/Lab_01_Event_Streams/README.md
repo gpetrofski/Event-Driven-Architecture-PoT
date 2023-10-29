@@ -206,7 +206,7 @@ For real use-cases, we would typically choose a relevant and meaningful topic na
 
 Here, you can choose the number of partitions for your topic.
 
-> [!NOTES]
+> [!NOTE]   
 > By having multiple partitions distributed across the brokers, the scalability of a topic is increased. If a topic has more than one partition, it allows data to be fed through in parallel to increase throughput by distributing the partitions across the cluster.
 
 For the purpose of this lab, you can keep the default of **1 partition**.
@@ -223,7 +223,7 @@ You can keep the default of **a week**.
 
 ![Replication](resources/Replication.png)
 
-> [!NOTES]
+> [!NOTE] 
 > To improve availability and resiliency, each topic can be replicated onto multiple brokers. For each partition, one of the brokers is the leader, and the other brokers are the followers.
 
 You can select **Replication factor: 1, Minimum in-sync replicas: 1** for the purpose of this lab.
@@ -250,7 +250,7 @@ You will discover in the lab how easy it is to create credentials to access a sp
 
 --- 
 
-> [! NOTES]
+> [!NOTE]  
 > - Salted Challenge Response Authentication Mechanism (SCRAM) is a family of modern, password-based challenge–response authentication mechanisms providing authentication of a user to a server, used by many software like Kafka, MongoDB, database and etc. 
 > - An Event Streams cluster can be configured to expose any number of internal or external Kafka listeners. These listeners provide the mechanism for Kafka client applications to communicate with the Kafka brokers.  
 > - For more information on managing access, navigate to: [Managing Access](https://ibm.github.io/event-automation/es/security/managing-access/)
@@ -350,7 +350,7 @@ In the previous section, we created SCRAM credentials with access rights to prod
 To ease the Lab and to avoid installing software on the desktop, we have deployed a REST API EventStreams producer which allows to send messages to Kafka TOPIC using HTTP. 
 This RESP API has been exposed through [API Connect](https://www.ibm.com/products/api-connect) which secures the REST API and provides through its API developer portal an easy user interface to interact with a REST API. 
 
-> [!NOTES]
+> [!NOTE]  
 > [API Connect](https://www.ibm.com/products/api-connect) is an API Management solution and is part of IBM's integration portfolio. With API Connect, we can manage the entire lifecycle of our API's. API Connect offers different tools to allow you to build, test and monitor your API's and securely expose them through our [API gateway](https://www.ibm.com/products/api-connect/api-gateway).
 More information on API Connect can be found at the [API Connect Documentation](https://www.ibm.com/docs/en/api-connect/10.0.5.x_lts).
 
