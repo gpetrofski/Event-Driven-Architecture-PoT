@@ -289,9 +289,8 @@ The user interface allows us to easily create a Kafka user and generate SCRAM cr
 
 <img src="resources/images/Generate_SCRAM_Credentials.png" alt="drawing" width="400"/>
 
-[!IMPORTANT]
-
-> Give your credentials a meaningful name. Use the pattern `<Initials>-pot-credentials``.  
+> [!IMPORTANT]
+> Give your credentials a meaningful name. Use the pattern `<Initials>-pot-credentials`.  
 > If my name would be John Doe, I would name my credentials: **jod-pot-credentials**.
 
 We will use this credentials to produce and consume messages from the Kafka Topic.
