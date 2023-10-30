@@ -229,13 +229,9 @@ You should now see that the Large Orders filter was renamed to **Large Orders**.
 
 ![Event Processing Canvas Filter Run](resources/images/Event_Processing_Canvas_Filter_Run.png)
 
-Have a look at the events in the table. We should only see orders with a value of €50.00 and more.
+Have a look at the events in the table. We should only see orders with a value of €50.00 and more. We can navigate through the results, or click the pause putton to pause streaming and download a CSV with the results we collected.
 
-We can navigate through the results, or click the pause putton to pause streaming and download a CSV with the results we collected.
-
-This feature really allows us to quickly visualise our results or to download a CSV report for further processing.
-
-In a later phase of this lab, we will explore how to collect the processed results and put them on a new Kafka Topic for further automation.
+This feature really allows us to quickly visualise our results or to download a CSV report for further processing. In a later phase of this lab, we will explore how to collect the processed results and put them on a new Kafka Topic for further automation.
 
 8. Click **Stop** in the upper right corner to stop running the flow.
 
