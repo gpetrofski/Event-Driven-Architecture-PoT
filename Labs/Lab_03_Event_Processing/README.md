@@ -262,7 +262,7 @@ First, let's add the New Customers event source, so that we can later join those
 </div>
 
 > [!WARNING]
-> If you receive a Validation error, indicating that all sources must be connected to the same graph, this is strictly normal and just informs you that the Event Source should be connected to another node.
+> If you receive a Validation error, indicating that all sources must be connected to the same graph, this is normal and it just informs you that the Event Source should be connected to another node. We will fix this in a minute.
 
 <div style="text-align:center;margin:25px;">
   <img src="resources/images/Event_Processing_Edit_New_Customers.png" alt="Event Processing Validation Edit New Customers" width="400"/>
@@ -424,4 +424,44 @@ The Time To First Order (Transform) node has been configured and can now be test
 
 ![Event Processing Time To First Order Test](resources/images/Event_Processing_Time_To_First_Order_Test.png)
 
+9. Click **Stop** to stop the flow.
+
 ### Part 5 - **Aggregate** events
+
+We can use an aggregate node to divide the stream of events into time-based chunks and then run an aggregate function on each of these chunks
+
+For this lab, let's see how we can use an aggregate node to compute the **number of Large New Customer Orders** by **region** per **day**.
+
+![Event Processing Aggregate Node](resources/images/Event_Processing_Aggregate_Node.png)
+
+1. **Double Click** on the `Aggregate` node in the palette.
+
+2. Hover over the newly added node and click **Edit**.
+
+![Event Processing Aggregate Details](resources/images/Event_Processing_Aggregate_Details.png)
+
+3. Enter a recognizable name for the node, like `Orders By Region`. Click **Next**.
+
+![Event Processing Aggregate Time Window](resources/images/Event_Processing_Aggregate_Time_Window.png)
+
+4. For the time window property, select `first order time`. For duration of time window, select `1 Day(s)`. Click **Next**.
+
+![Event Processing Aggregate Function](resources/images/Event_Processing_Aggregate_Function.png)
+
+5. Now, select `COUNT` for the **aggregate function** and `id` for the **Property to aggregate**. Select `region` for the **additional property to group by**. Click **Next**.
+
+![Event Processing Aggregate Output Properties](resources/images/Event_Processing_Aggregate_Output_Properties.png)
+
+6. Remove the `aggregateStartTime` and `aggregateEndTime` properties by clicking on the **minus sign** next to the properties. Rename **COUNT_id** into `sales`.
+
+![Event Processing Orders By Region](resources/images/Event_Processing_Orders_By_Region.png)
+
+7. The **Orders By Region** node has now been configured. Let's test that we receive the expected results. Click **Run** and **Include historical** in the upper right corner. Click **Orders By Region** to see the results and confirm the results.
+
+![Event Processing Orders By Region Test](resources/images/Event_Processing_Orders_By_Region_Test.png)
+
+8. Click **Stop** to stop the flow.
+
+### Part 6 - Connect to an **event destination**
+
+[TODO]
