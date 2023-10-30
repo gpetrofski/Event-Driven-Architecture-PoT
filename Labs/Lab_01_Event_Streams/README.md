@@ -45,7 +45,7 @@ In this lab, we are going to introduce you to IBM Event Streams. After this lab,
 For this lab, we already provided the necessary environments and user credentials to access the environments. The details for accessing the provided environments will be shared with you separately.
 
 > [!WARNING]
-> All the user interface that we are using for the PoT uses self-signed certificates. This means that when you navigate to the page for the first time you will receive a warning page as shown here after. Depending of your web browser, you will need to either trust the certificate or just accept to navigate to the site. You might need to accept different certificates before reaching the user interface.
+> All the user interfaces that we are using for the PoT uses self-signed certificates. This means that when you navigate to the page for the first time you will receive a warning page as shown here after. Depending of your web browser, you will need to either trust the certificate or just accept to navigate to the site. You might need to accept different certificates before reaching the user interface.
 
 ![](resources/images/certificate.png)
 

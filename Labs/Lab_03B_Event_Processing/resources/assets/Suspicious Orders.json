@@ -1,0 +1,687 @@
+{
+  "pipelineState": {
+    "doc_type": "pipeline",
+    "version": "3.0",
+    "json_schema": "http://api.dataplatform.ibm.com/schemas/common-pipeline/pipeline-flow/pipeline-flow-v3-schema.json",
+    "id": "2296dc5c-444a-4b60-8b0c-204abfca4518",
+    "primary_pipeline": "6e49ab7b-3e3c-44fd-8d7e-fcf08f22baa9",
+    "pipelines": [
+      {
+        "id": "6e49ab7b-3e3c-44fd-8d7e-fcf08f22baa9",
+        "nodes": [
+          {
+            "id": "ceff2dc9-9439-4393-8fd3-9895bc209059",
+            "type": "source",
+            "app_data": {
+              "node_type": "source",
+              "ui_data": {
+                "label": "ORDERS.NEW",
+                "image": "/images/svg/source.svg",
+                "x_pos": 185,
+                "y_pos": 121,
+                "description": "Provides the source data"
+              }
+            },
+            "outputs": [
+              {
+                "id": "outPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": -1
+                    },
+                    "label": "Output Port"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "480d3ba7-ee29-4cb7-be2d-d93e3acb48b1",
+            "type": "filter",
+            "app_data": {
+              "node_type": "filter",
+              "ui_data": {
+                "label": "Large Orders",
+                "image": "/images/svg/filter.svg",
+                "x_pos": 553,
+                "y_pos": 121,
+                "description": "Performs the filter operation"
+              }
+            },
+            "inputs": [
+              {
+                "id": "inPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": 1
+                    },
+                    "label": "Input Port"
+                  }
+                },
+                "links": [
+                  {
+                    "id": "f0e3378e-8333-4a4e-8174-4f411b71f60b",
+                    "node_id_ref": "ceff2dc9-9439-4393-8fd3-9895bc209059",
+                    "port_id_ref": "outPort"
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "id": "outPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": -1
+                    },
+                    "label": "Output Port"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "e22c5386-7101-467a-85f4-0ebab0295f48",
+            "type": "filter",
+            "app_data": {
+              "node_type": "filter",
+              "ui_data": {
+                "label": "Small Orders",
+                "image": "/images/svg/filter.svg",
+                "x_pos": 551,
+                "y_pos": 30,
+                "description": "Performs the filter operation"
+              }
+            },
+            "inputs": [
+              {
+                "id": "inPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": 1
+                    },
+                    "label": "Input Port"
+                  }
+                },
+                "links": [
+                  {
+                    "id": "8a2f6a6d-fa5a-4715-a835-868094b55fd2",
+                    "node_id_ref": "ceff2dc9-9439-4393-8fd3-9895bc209059",
+                    "port_id_ref": "outPort"
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "id": "outPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": -1
+                    },
+                    "label": "Output Port"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "0822ca1e-d846-40fb-bfac-d03f172d67e7",
+            "type": "source",
+            "app_data": {
+              "node_type": "source",
+              "ui_data": {
+                "label": "Cancelled Orders",
+                "image": "/images/svg/source.svg",
+                "x_pos": 184,
+                "y_pos": 217,
+                "description": "Provides the source data"
+              }
+            },
+            "outputs": [
+              {
+                "id": "outPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": -1
+                    },
+                    "label": "Output Port"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "13b88276-c4d6-4112-9c0d-a4ca49b671e6",
+            "type": "intervalJoin",
+            "app_data": {
+              "node_type": "intervalJoin",
+              "ui_data": {
+                "label": "Cancelled Large Orders",
+                "image": "/images/svg/intervalJoin.svg",
+                "x_pos": 894,
+                "y_pos": 225,
+                "description": "Performs join operations"
+              }
+            },
+            "inputs": [
+              {
+                "id": "inPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": 2
+                    },
+                    "label": "Input Port"
+                  }
+                },
+                "links": [
+                  {
+                    "id": "e580fef2-3914-4582-b571-50f6be79d5d0",
+                    "node_id_ref": "480d3ba7-ee29-4cb7-be2d-d93e3acb48b1",
+                    "port_id_ref": "outPort"
+                  },
+                  {
+                    "id": "b93373ee-1af7-4db7-b196-47133996299a",
+                    "node_id_ref": "0822ca1e-d846-40fb-bfac-d03f172d67e7",
+                    "port_id_ref": "outPort"
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "id": "outPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": -1
+                    },
+                    "label": "Output Port"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "7b3ca34f-b0f0-4736-bb66-2e75606c1ffb",
+            "type": "intervalJoin",
+            "app_data": {
+              "node_type": "intervalJoin",
+              "ui_data": {
+                "label": "Suspicious Orders",
+                "image": "/images/svg/intervalJoin.svg",
+                "x_pos": 1248,
+                "y_pos": 104,
+                "description": "Performs join operations"
+              }
+            },
+            "inputs": [
+              {
+                "id": "inPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": 2
+                    },
+                    "label": "Input Port"
+                  }
+                },
+                "links": [
+                  {
+                    "id": "9b81725e-73aa-4f0c-b60a-03233df72ca4",
+                    "node_id_ref": "e22c5386-7101-467a-85f4-0ebab0295f48",
+                    "port_id_ref": "outPort"
+                  },
+                  {
+                    "id": "fe2614b7-5e53-4720-a85e-a516f3068e5f",
+                    "node_id_ref": "13b88276-c4d6-4112-9c0d-a4ca49b671e6",
+                    "port_id_ref": "outPort"
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "id": "outPort",
+                "app_data": {
+                  "ui_data": {
+                    "cardinality": {
+                      "min": 0,
+                      "max": -1
+                    },
+                    "label": "Output Port"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "app_data": {
+          "ui_data": {
+            "comments": []
+          }
+        },
+        "runtime_ref": ""
+      }
+    ],
+    "schemas": []
+  },
+  "contextState": {
+    "edges": [
+      {
+        "incoming": "ceff2dc9-9439-4393-8fd3-9895bc209059",
+        "outgoing": "480d3ba7-ee29-4cb7-be2d-d93e3acb48b1"
+      },
+      {
+        "incoming": "ceff2dc9-9439-4393-8fd3-9895bc209059",
+        "outgoing": "e22c5386-7101-467a-85f4-0ebab0295f48"
+      },
+      {
+        "incoming": "480d3ba7-ee29-4cb7-be2d-d93e3acb48b1",
+        "outgoing": "13b88276-c4d6-4112-9c0d-a4ca49b671e6"
+      },
+      {
+        "incoming": "0822ca1e-d846-40fb-bfac-d03f172d67e7",
+        "outgoing": "13b88276-c4d6-4112-9c0d-a4ca49b671e6"
+      },
+      {
+        "incoming": "e22c5386-7101-467a-85f4-0ebab0295f48",
+        "outgoing": "7b3ca34f-b0f0-4736-bb66-2e75606c1ffb"
+      },
+      {
+        "incoming": "13b88276-c4d6-4112-9c0d-a4ca49b671e6",
+        "outgoing": "7b3ca34f-b0f0-4736-bb66-2e75606c1ffb"
+      }
+    ],
+    "nodes": [
+      {
+        "viewName": "ORDERS.NEW",
+        "nodeId": "ceff2dc9-9439-4393-8fd3-9895bc209059",
+        "nodeType": "source",
+        "configuration": {
+          "topicName": "ORDERS.NEW",
+          "bootstrapServers": [
+            "evtaut-eem-gw-ibm-egw-rt-event.cp4i21-5b7e0d81360e5972646d63308bd04bf7-0000.eu-de.containers.appdomain.cloud:443"
+          ],
+          "ssl": true,
+          "topic": "ORDERS.NEW",
+          "sampleMessage": "",
+          "fields": [
+            {
+              "name": "id",
+              "type": "STRING",
+              "selected": true
+            },
+            {
+              "name": "customer",
+              "type": "STRING",
+              "selected": true
+            },
+            {
+              "name": "customerid",
+              "type": "STRING",
+              "selected": true
+            },
+            {
+              "name": "description",
+              "type": "STRING",
+              "selected": true
+            },
+            {
+              "name": "price",
+              "type": "DOUBLE",
+              "selected": true
+            },
+            {
+              "name": "quantity",
+              "type": "BIGINT",
+              "selected": true
+            },
+            {
+              "name": "region",
+              "type": "STRING",
+              "selected": true
+            },
+            {
+              "name": "ordertime",
+              "type": "TIMESTAMP",
+              "selected": true
+            }
+          ],
+          "watermark": {
+            "watermarkWithEventSource": true,
+            "topicLocalTimeRequired": false,
+            "watermarkColumn": "ordertime",
+            "interval": 1,
+            "timeUnit": "MINUTE"
+          },
+          "configureNewSource": false,
+          "topicIdForReuse": "14359406-12d4-4d95-97af-7d47159be621",
+          "persistSourceTopic": true,
+          "isSourceEditable": true,
+          "type": "SASL",
+          "username": "eem-14296db2-e8c9-4bb1-a34f-ce6c0154afbf",
+          "password": "f3406023-8b77-421b-8232-059aca65c62d",
+          "mechanism": "PLAIN",
+          "certs": [
+            {
+              "pem": "-----BEGIN CERTIFICATE-----\nMIIE8DCCA9igAwIBAgIRAM4O9pvSAdxiZutTBQPzQUowDQYJKoZIhvcNAQELBQAwUDEmMCQGA1UEChMdSUJNIEV2ZW50IEVuZHBvaW50IE1hbmFnZW1lbnQxJjAkBgNVBAMTHUlCTSBFdmVudCBFbmRwb2ludCBNYW5hZ2VtZW50MB4XDTIzMDkxNjEyMDQyOFoXDTIzMTIxNTEyMDQyOFowKDEmMCQGA1UEChMdSUJNIEV2ZW50IEVuZHBvaW50IE1hbmFnZW1lbnQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDV0rO/3RfFpxVhGo2xKzOz+MAYduOcZKwrRFcwKXFMgYw0f5/Obp+iDL2lsLOe/dtgRzb6pGdAW93gUUYA0xd2++Oc4OTVNIx6XUl3rOzR3dpQYaRoqZeEK5S5D/xdjARgckZIqbGYgZZLRXJa0aaao1h4x7+4Y28gDCBwq3ESidw3rKEoxfQPpUcOh6gdcLZOYb9sZBT+Kz6TU+hOsTr8CyoUqjDkcgBejpAEpAOGzPfsKR2d7ZO5KQNBg/60kmkpuhhrnX4st3bVXVOpvznOXybMR0tdP1y2sEam6T6JSZ6Lt1xnRRXUdQr8RJ2ipaHYQB4coKHo4isABOvW4I5pAgMBAAGjggHrMIIB5zAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUatS6NztLRW5fWXj0W5RfRF9r18wwggGFBgNVHREEggF8MIIBeIIfZXZ0YXV0LWVlbS1ndy1pYm0tZWd3LXN2Yy5ldmVudIIjZXZ0YXV0LWVlbS1ndy1pYm0tZWd3LXN2Yy5ldmVudC5zdmOCMWV2dGF1dC1lZW0tZ3ctaWJtLWVndy1zdmMuZXZlbnQuc3ZjLmNsdXN0ZXIubG9jYWyCbGV2dGF1dC1lZW0tZ3ctaWJtLWVndy1ydC1ldmVudC5jcDRpMjEtNWI3ZTBkODEzNjBlNTk3MjY0NmQ2MzMwOGJkMDRiZjctMDAwMC5ldS1kZS5jb250YWluZXJzLmFwcGRvbWFpbi5jbG91ZIaBjmVndzovL2V2dGF1dC1lZW0tZ3ctaWJtLWVndy1ydC1ldmVudC5jcDRpMjEtNWI3ZTBkODEzNjBlNTk3MjY0NmQ2MzMwOGJkMDRiZjctMDAwMC5ldS1kZS5jb250YWluZXJzLmFwcGRvbWFpbi5jbG91ZDo0NDMvZ2F0ZXdheS1ncm91cC9nYXRld2F5LTEwDQYJKoZIhvcNAQELBQADggEBAI74uEeapoRr5zoXEqhky9yiftneh7I6D2ZRZXLh+Kt/tCtafYEtu4gti1E5t3LT1D8W/fii1TjMTkWiWQPkL1Sh+dOGFoNorlTe4Zy8y6ZuzNwgKuhqPQoDUHjF3LGA7M169+eJSWc22W2lAGnsaicul3c0u7ApFrhfSAb8JtmtbadO5G+lSRWxgBFpxLzDtmN06fnZTEm/MV68lZP0vWKIEPXga2fC4A1b771A+hhmwzYvUKaLMhcrd9eVLtEDJgNMBuPhjvz0Mq1uswwyI4TDI9uKKgS44Pt1YodxlArD4CRXSOzfWGIHRl1bEf1bFeXkXEysiQ0kCaGJGyF0cMA=\n-----END CERTIFICATE-----\n"
+            }
+          ],
+          "hasSourcePersisted": true,
+          "certificatesAccepted": true
+        }
+      },
+      {
+        "viewName": "Large Orders",
+        "nodeId": "480d3ba7-ee29-4cb7-be2d-d93e3acb48b1",
+        "nodeType": "filter",
+        "configuration": {
+          "statement": "`price` >= 50"
+        }
+      },
+      {
+        "viewName": "Small Orders",
+        "nodeId": "e22c5386-7101-467a-85f4-0ebab0295f48",
+        "nodeType": "filter",
+        "configuration": {
+          "statement": "`price` < 50"
+        }
+      },
+      {
+        "viewName": "Cancelled Orders",
+        "nodeId": "0822ca1e-d846-40fb-bfac-d03f172d67e7",
+        "nodeType": "source",
+        "configuration": {
+          "topicName": "Cancelled Orders",
+          "bootstrapServers": [
+            "evtaut-eem-gw-ibm-egw-rt-event.cp4i21-5b7e0d81360e5972646d63308bd04bf7-0000.eu-de.containers.appdomain.cloud:443"
+          ],
+          "ssl": true,
+          "topic": "CANCELLATIONS",
+          "sampleMessage": "",
+          "fields": [
+            {
+              "name": "id",
+              "type": "STRING",
+              "selected": true
+            },
+            {
+              "name": "orderid",
+              "type": "STRING",
+              "selected": true
+            },
+            {
+              "name": "canceltime",
+              "type": "TIMESTAMP",
+              "selected": true
+            },
+            {
+              "name": "reason",
+              "type": "STRING",
+              "selected": true
+            }
+          ],
+          "watermark": {
+            "watermarkWithEventSource": true,
+            "topicLocalTimeRequired": false,
+            "watermarkColumn": "canceltime",
+            "interval": 1,
+            "timeUnit": "MINUTE"
+          },
+          "configureNewSource": false,
+          "topicIdForReuse": "112019dd-2e9a-41ee-95a3-716dc2177a6e",
+          "persistSourceTopic": true,
+          "isSourceEditable": true,
+          "type": "SASL",
+          "username": "eem-4221b2de-4866-43f2-bb87-7c274711c568",
+          "password": "1f2be1dc-cc18-4b73-8afb-620b92ee1ca9",
+          "mechanism": "PLAIN",
+          "certs": [
+            {
+              "pem": "-----BEGIN CERTIFICATE-----\nMIIE8DCCA9igAwIBAgIRAM4O9pvSAdxiZutTBQPzQUowDQYJKoZIhvcNAQELBQAwUDEmMCQGA1UEChMdSUJNIEV2ZW50IEVuZHBvaW50IE1hbmFnZW1lbnQxJjAkBgNVBAMTHUlCTSBFdmVudCBFbmRwb2ludCBNYW5hZ2VtZW50MB4XDTIzMDkxNjEyMDQyOFoXDTIzMTIxNTEyMDQyOFowKDEmMCQGA1UEChMdSUJNIEV2ZW50IEVuZHBvaW50IE1hbmFnZW1lbnQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDV0rO/3RfFpxVhGo2xKzOz+MAYduOcZKwrRFcwKXFMgYw0f5/Obp+iDL2lsLOe/dtgRzb6pGdAW93gUUYA0xd2++Oc4OTVNIx6XUl3rOzR3dpQYaRoqZeEK5S5D/xdjARgckZIqbGYgZZLRXJa0aaao1h4x7+4Y28gDCBwq3ESidw3rKEoxfQPpUcOh6gdcLZOYb9sZBT+Kz6TU+hOsTr8CyoUqjDkcgBejpAEpAOGzPfsKR2d7ZO5KQNBg/60kmkpuhhrnX4st3bVXVOpvznOXybMR0tdP1y2sEam6T6JSZ6Lt1xnRRXUdQr8RJ2ipaHYQB4coKHo4isABOvW4I5pAgMBAAGjggHrMIIB5zAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUatS6NztLRW5fWXj0W5RfRF9r18wwggGFBgNVHREEggF8MIIBeIIfZXZ0YXV0LWVlbS1ndy1pYm0tZWd3LXN2Yy5ldmVudIIjZXZ0YXV0LWVlbS1ndy1pYm0tZWd3LXN2Yy5ldmVudC5zdmOCMWV2dGF1dC1lZW0tZ3ctaWJtLWVndy1zdmMuZXZlbnQuc3ZjLmNsdXN0ZXIubG9jYWyCbGV2dGF1dC1lZW0tZ3ctaWJtLWVndy1ydC1ldmVudC5jcDRpMjEtNWI3ZTBkODEzNjBlNTk3MjY0NmQ2MzMwOGJkMDRiZjctMDAwMC5ldS1kZS5jb250YWluZXJzLmFwcGRvbWFpbi5jbG91ZIaBjmVndzovL2V2dGF1dC1lZW0tZ3ctaWJtLWVndy1ydC1ldmVudC5jcDRpMjEtNWI3ZTBkODEzNjBlNTk3MjY0NmQ2MzMwOGJkMDRiZjctMDAwMC5ldS1kZS5jb250YWluZXJzLmFwcGRvbWFpbi5jbG91ZDo0NDMvZ2F0ZXdheS1ncm91cC9nYXRld2F5LTEwDQYJKoZIhvcNAQELBQADggEBAI74uEeapoRr5zoXEqhky9yiftneh7I6D2ZRZXLh+Kt/tCtafYEtu4gti1E5t3LT1D8W/fii1TjMTkWiWQPkL1Sh+dOGFoNorlTe4Zy8y6ZuzNwgKuhqPQoDUHjF3LGA7M169+eJSWc22W2lAGnsaicul3c0u7ApFrhfSAb8JtmtbadO5G+lSRWxgBFpxLzDtmN06fnZTEm/MV68lZP0vWKIEPXga2fC4A1b771A+hhmwzYvUKaLMhcrd9eVLtEDJgNMBuPhjvz0Mq1uswwyI4TDI9uKKgS44Pt1YodxlArD4CRXSOzfWGIHRl1bEf1bFeXkXEysiQ0kCaGJGyF0cMA=\n-----END CERTIFICATE-----\n"
+            }
+          ],
+          "hasSourcePersisted": true,
+          "certificatesAccepted": true
+        }
+      },
+      {
+        "viewName": "Cancelled Large Orders",
+        "nodeId": "13b88276-c4d6-4112-9c0d-a4ca49b671e6",
+        "nodeType": "intervalJoin",
+        "configuration": {
+          "joinCondition": "`Large Orders`.`id` = `Cancelled Orders`.`orderid`",
+          "timeCondition": {
+            "watchedTimeEvent": {
+              "table": "Cancelled Orders",
+              "column": "canceltime"
+            },
+            "baseTimeEvent": {
+              "table": "Large Orders",
+              "column": "ordertime"
+            },
+            "start": {
+              "interval": 0,
+              "timeUnit": "MINUTE"
+            },
+            "end": {
+              "interval": 30,
+              "timeUnit": "MINUTE"
+            }
+          },
+          "columns": [
+            {
+              "outputColumn": "orderId",
+              "expression": "",
+              "input": {
+                "column": "id",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "customer",
+              "expression": "",
+              "input": {
+                "column": "customer",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "customerid",
+              "expression": "",
+              "input": {
+                "column": "customerid",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "description",
+              "expression": "",
+              "input": {
+                "column": "description",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "price",
+              "expression": "",
+              "input": {
+                "column": "price",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "quantity",
+              "expression": "",
+              "input": {
+                "column": "quantity",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "region",
+              "expression": "",
+              "input": {
+                "column": "region",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "ordertime",
+              "expression": "",
+              "input": {
+                "column": "ordertime",
+                "table": "Large Orders"
+              }
+            },
+            {
+              "outputColumn": "id",
+              "expression": "",
+              "input": {
+                "column": "id",
+                "table": "Cancelled Orders"
+              }
+            },
+            {
+              "outputColumn": "canceltime",
+              "expression": "",
+              "input": {
+                "column": "canceltime",
+                "table": "Cancelled Orders"
+              }
+            },
+            {
+              "outputColumn": "reason",
+              "expression": "",
+              "input": {
+                "column": "reason",
+                "table": "Cancelled Orders"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "viewName": "Suspicious Orders",
+        "nodeId": "7b3ca34f-b0f0-4736-bb66-2e75606c1ffb",
+        "nodeType": "intervalJoin",
+        "configuration": {
+          "joinCondition": "`Small Orders`.`customerid` = `Cancelled Large Orders`.`customerid`",
+          "timeCondition": {
+            "watchedTimeEvent": {
+              "table": "Cancelled Large Orders",
+              "column": "canceltime"
+            },
+            "baseTimeEvent": {
+              "table": "Small Orders",
+              "column": "ordertime"
+            },
+            "start": {
+              "interval": 0,
+              "timeUnit": "MINUTE"
+            },
+            "end": {
+              "interval": 30,
+              "timeUnit": "MINUTE"
+            }
+          },
+          "columns": [
+            {
+              "outputColumn": "customer",
+              "expression": "",
+              "input": {
+                "column": "customer",
+                "table": "Small Orders"
+              }
+            },
+            {
+              "outputColumn": "customerid",
+              "expression": "",
+              "input": {
+                "column": "customerid",
+                "table": "Small Orders"
+              }
+            },
+            {
+              "outputColumn": "smallOrderId",
+              "expression": "",
+              "input": {
+                "column": "id",
+                "table": "Small Orders"
+              }
+            },
+            {
+              "outputColumn": "smallOrderPrice",
+              "expression": "",
+              "input": {
+                "column": "price",
+                "table": "Small Orders"
+              }
+            },
+            {
+              "outputColumn": "smallOrderOrdertime",
+              "expression": "",
+              "input": {
+                "column": "ordertime",
+                "table": "Small Orders"
+              }
+            },
+            {
+              "outputColumn": "largeOrderId",
+              "expression": "",
+              "input": {
+                "column": "orderId",
+                "table": "Cancelled Large Orders"
+              }
+            },
+            {
+              "outputColumn": "largeOrderPrice",
+              "expression": "",
+              "input": {
+                "column": "price",
+                "table": "Cancelled Large Orders"
+              }
+            },
+            {
+              "outputColumn": "largeOrderTime",
+              "expression": "",
+              "input": {
+                "column": "ordertime",
+                "table": "Cancelled Large Orders"
+              }
+            },
+            {
+              "outputColumn": "largeOrderCanceltime",
+              "expression": "",
+              "input": {
+                "column": "canceltime",
+                "table": "Cancelled Large Orders"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flowDetails": {
+    "flowName": "Suspicious Orders",
+    "flowDescription": "Suspicious Orders"
+  }
+}
