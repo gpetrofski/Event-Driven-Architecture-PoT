@@ -115,7 +115,9 @@ The user interface allows us to:
 
 Let's start by adding our first node onto the canvas.
 
-![Event Processing Drag Event Source](resources/images/Event_Processing_Drag_Event_Source.png)
+<div style="text-align:center;margin:25px;">
+  <img src="resources/images/Event_Processing_Drag_Event_Source.png" alt="Event Processing Drag Event Source" width="400"/>
+</div>
 
 4. Drag and drop an **Event Source** node onto the empty canvas.
 
