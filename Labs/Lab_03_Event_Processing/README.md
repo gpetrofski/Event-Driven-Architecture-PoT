@@ -115,6 +115,8 @@ The user interface allows us to:
 
 Let's start by adding our first node onto the canvas.
 
+![Event Processing Drag Event Source](resources/images/Event_Processing_Drag_Event_Source.png)
+
 4. Drag and drop an **Event Source** node onto the empty canvas.
 
 <div style="text-align:center;margin:25px;">
@@ -236,6 +238,8 @@ This feature really allows us to quickly visualise our results or to download a 
 8. Click **Stop** in the upper right corner to stop running the flow.
 
 Now, let's have a look at how we can add another source of events and join those two event sources together.
+
+---
 
 ### Part 3 - **Join** events
 
@@ -382,6 +386,8 @@ Some results should start coming in. We should only see results with a price >= 
 
 11. Click **Stop** to stop the flow.
 
+---
+
 ### Part 4 - **Transform** events
 
 For the new stream of events that our flow will emit, it will be helpful to include a new property that calculates how quickly after registering, the new customer made their first order.
@@ -426,6 +432,8 @@ The Time To First Order (Transform) node has been configured and can now be test
 
 9. Click **Stop** to stop the flow.
 
+---
+
 ### Part 5 - **Aggregate** events
 
 We can use an aggregate node to divide the stream of events into time-based chunks and then run an aggregate function on each of these chunks
@@ -462,6 +470,115 @@ For this lab, let's see how we can use an aggregate node to compute the **number
 
 8. Click **Stop** to stop the flow.
 
+---
+
 ### Part 6 - Connect to an **event destination**
 
-[TODO]
+We will now produce the flow output to a new topic.
+
+You have created an event processing flow that will identify the new customers that the sales team are interested in contacting.
+To enable the automation that they will use to contact them, your next step is to configure your event processing flow to produce events to a new Kafka topic.
+
+#### Create a new Topic
+
+1. Navigate to the `Event Streams URL` in a new browser tab.
+
+> [Event Streams URL]
+
+2. Click on the **Topics** tab in the menu. Click **Create topic**.
+
+![Event Streams Create Topic](resources/images/Event_Streams_Create_Topic.png)
+
+3. Call the new topic `<Initials>.CUSTOMERS.CONTACT` (i.e. a unique name on this shared cluster). Click **Next**.
+
+> [!NOTE]
+> If my name would be John Doe, I would name my topic: **JOD.CUSTOMERS.CONTACT**.
+
+4. Keep the default of **1 partition**. Click **Next**.
+
+5. Keep the default message retention of **A week**. Click **Next**.
+
+6. Select `Replication factor: 1` and `Minimum in-sync replicas: 1`. Click **Create topic**.
+
+7. Click on your newly create **topic** `<Initials>.CUSTOMERS.CONTACT`.
+
+8. Click on **Connect to this topic** in the upper right corner.
+
+9. click on **Generate SCRAM credentials**.
+
+10. Provide credential name and select **Produce and consume messages, and read schemas**. Click **Next**.
+
+> [!NOTE]
+> Give your credentials a meaningful name. Use the pattern `<Initials>-pot-customers-credentials`.  
+> If my name would be John Doe, I would name my credentials: **jod-pot-customers-credentials**.
+
+11. Select **A specific topic** and fill in your **previously created topic** name. Click **Next**.
+
+12. Keep the defaults **All consumer groups**. Click **Next**.
+
+13. Keep the defaults **No transactional IDs**. Click **'Generate credentials'**.
+
+14. Copy the Bootstrap URL and credentials.
+
+> [!WARNING]
+> Copy the **Bootstrap URL**, **SCRAM username** and **SCRAM password** that have been generated, and keep them somewhere locally for later use (to produce and consume messages).
+
+#### Create the Event Destination
+
+1. Navigate back to the `Event Processing URL` in a new browser tab.
+
+> [Event Processing URL]
+
+![Event Processing Drag Event Destination](resources/images/Event_Processing_Drag_Event_Destination.png)
+
+2. Drag and drop a new **Event Destination** node onto the canvas, and connect the **Time To First Order** node to the newly added destination node.
+
+<div style="text-align:center;margin:25px;">
+  <img src="resources/images/Event_Processing_Sink_Edit.png" alt="Event Processing Sink Edit" width="400"/>
+</div>
+
+3. With your mouse, hover over the node that you dragged onto the canvas, and click the **edit** button (the pencil icon above the node).
+
+![Event Processing Sink Details](resources/images/Event_Processing_Sink_Details.png)
+
+4. Provide a meaningful name like `Customers Output` and enter your `Kafka Bootstrap URL` that you copied in the previous section while creating the SCRAM Credentials. Click **Next**.
+
+5. Accept the **Self-signed certificates** and click **Next**.
+
+![Event Processing Sink Credentials](resources/images/Event_Processing_Sink_Credentials.png)
+
+6. The security mechanism should automatically be set to **SCRAM-SHA-512**, keep the default. Enter the `Username` and `Password` that you copied in the previous section while creating the SCRAM Credentials.
+
+![Event Processing Sink Topic](resources/images/Event_Processing_Sink_Topic.png)
+
+7. You should only see one Topic `<Initials>.CUSTOMERS.CONTACT`. Keep the default and click **Configure**.
+
+<div style="text-align:center;margin:25px;">
+  <img src="resources/images/Event_Processing_Aggregate_Delete.png" alt="Event Processing Aggregate Delete" width="400"/>
+</div>
+
+8. Delete the **Aggregate** node that we added in Part 5, as we should only end our flow with one Node.
+
+The Event Destination (sink) node has been configured and can now be tested.
+
+9. Click **Run** and **Include historical** in the top right corner. Click the **Customers Output** node to see the results.
+
+![Event Processing Sink Test](resources/images/Event_Processing_Sink_Test.png)
+
+We should see the same output as we saw in the previous node \*_Time To First Order_. The only difference is that this data is now also streamed to the new topic that you previously created.
+
+Let's have a look at the topic in the Event Streams UI.
+
+10. Navigate back to the `Event Streams URL`. Select **Topics** from the menu, and select your **Topic**.
+
+![Event Processing Sink Topic Messages](resources/images/Event_Processing_Sink_Topic_Messages.png)
+
+11. Click on **Messages** and open one of the messages. Validate that the message contains the data we expected (with the **mins before first order** field).
+
+---
+
+### Recap
+
+You have created an event processing flow. Processing events is key to extract valuable insights in real-time data and to detect situations that impact the business before it's too late.
+
+You can find other ideas for flows to create at [https://ibm.biz/ea-tutorials](https://ibm.biz/ea-tutorials).
