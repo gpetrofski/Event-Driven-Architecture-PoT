@@ -1,6 +1,7 @@
 # LAB 01 - Event Streams
 
-This document serves as a resource accompanying the presentations and Proof of Technology event around IBM Event Automation. It is designed to provide insights and hands-on experience for the Event Streams capability, which acts as the backbone of our event-driven architecture.
+This document serves as a resource accompanying the presentations and Proof of Technology event around IBM Event Automation.  
+It is designed to provide insights and hands-on experience for the Event Streams capability, which acts as the backbone of our event-driven architecture.
 
 ![IBM Event Streams](resources/images/IBM_Event_Streams.png)
 
@@ -30,7 +31,8 @@ Event Streams uses Strimzi to deploy Apache Kafka in a resilient and manageable 
 
 - Granular security configuration through Kafka access control lists to configure authorization and quotas for connecting applications.
 
-> To learn more about Event Streams and its capabilities, navigate to the documentation page: [Event Streams Documentation](https://ibm.github.io/event-automation/es/about/overview/)
+>[!NOTE]  
+>To learn more about Event Streams and its capabilities, navigate to the documentation page: [Event Streams Documentation](https://ibm.github.io/event-automation/es/about/overview/)
 
 ## Event Streams: Lab Introduction
 
@@ -44,12 +46,13 @@ In this lab, we are going to introduce you to IBM Event Streams. After this lab,
 
 For this lab, we already provided the necessary environments and user credentials to access the environments. The details for accessing the provided environments will be shared with you separately.
 
-> [!WARNING]
-> All the user interfaces that we are using for the PoT uses self-signed certificates. This means that when you navigate to the page for the first time you will receive a warning page as shown here after. Depending of your web browser, you will need to either trust the certificate or just accept to navigate to the site. You might need to accept different certificates before reaching the user interface.
+>[!WARNING]  
+>All the user interface that we are using for the PoT uses self-signed certificates.  
+>This means that when you navigate to the page for the first time you will receive a warning page as shown here after. Depending of your web browser, you will need to either trust the certificate or just accept to navigate to the site. You might need to accept different certificates before reaching the user interface.  
 
-![](resources/images/certificate.png)
+<img src="resources/images/certificate.png" alt="drawing" width="400"/>
 
-In this page, you can click on "visit this website".
+In this page, you can click on "visit this website" to accept the certificate.
 
 ---
 
@@ -59,7 +62,7 @@ In this page, you can click on "visit this website".
 
 The _URL_ for Event Streams should have been provided seperately. Navigate to the user interface and you should be navigated automatically to the login page, if you didn't login previously.
 
-> <font size="1">**[Event Streams URL]**</font>
+[Event Streams URL](https://cpd-cp4i.apps.melch.coc-ibm.com/integration/kafka-clusters/cp4i-eventstreams/es-demo/gettingstarted)
 
 ![Log In](resources/images/Log_In.png)
 
@@ -111,13 +114,60 @@ Click on a _Consumer group ID_. You should now see more information about the co
 
 3. click **Schema Registry** in the menu.
 
-![Schema Registry](resources/images/Schema_Registry.png)
+![](resources/images/2023-10-31-17-46-52.png)
+
+We can see that there is a schema already uploaded and it has a version 1.1.  
+The schema is Apache AVRO.  
+EventStreams leverage the open source Apicurio schema registry.  
+The user interface only supports in term of import AVRO Schema (JSON or Binary). Other schema can be uploaded (compatible with Apicurio) into the registry using the REST API.
+
+>[!WARNING]
+>Do not modify or delete the schemas. It is provided as example and be used by other attendees of this PoT.
 
 Apache Kafka can handle any data, but it does not validate the information in the messages. However, efficient handling of data often requires that it includes specific information in a certain format. Using schemas, you can define the structure of the data in a message, ensuring that both producers and consumers use the correct structure.
 
 Schemas help producers create data that conforms to a predefined structure, defining the fields that need to be present together with the type of each field. This definition then helps consumers parse that data and interpret it correctly. Event Streams supports schemas and includes a schema registry for using and managing schemas.
 
 It is common for all of the messages on a topic to use the same schema. The key and value of a message can each be described by a schema.
+
+4. Click on the schema "CANCELLATIONS"  
+
+![](resources/images/2023-10-31-17-50-30.png)
+
+You can see that there are two versions available for the schema.   
+By default the schema compatibility is set to FULL:   
+- A new version of the schema can add optional fields that are not present in the existing version of the schema. 
+- A new version of the schema can omit optional fields that are present in the existing version of the schema.
+
+This can be changed at global level or at schema level.
+
+There is a validation applied when a schema is uploaded. If it is not compatible with the rules that have been defined, a error will be displayed as shown here after:
+
+![](resources/images/schema_incompatible.png)
+
+5. Click on the version 1.0.0
+
+![](resources/images/2023-10-31-17-56-54.png)
+
+You can see the description of the schema on this page.
+If you compare the version 1.1 and 1.0.0 you will see that the version 1.1 has an additional field "location".
+
+6. Click on the manage version of the version 1.0.0
+
+![](resources/images/2023-10-31-17-56-54.png)
+
+![](resources/images/2023-10-31-17-59-10.png)
+
+The UI provides the ability to deprecate the schema or to delete the version.
+
+>[!WARNING]
+>Please **do not delete or deprecate** the version.
+
+
+> For more information on schemas and how to use them, navigate to: [Schemas overview](https://ibm.github.io/event-automation/es/schemas/overview/)
+
+--- 
+Additional information on schema registry
 
 **Schema Registry**
 
@@ -137,34 +187,9 @@ Avro has support for a wide range of data types, including primitive types (null
 
 Whenever you add a schema, and any subsequent versions of the same schema, Apicurio Registry validates the format automatically and warns of any issues. You can evolve your schemas over time to accommodate changing requirements. You simply create a new version of an existing schema, and the registry ensures that the new version is compatible with the existing version, meaning that producers and consumers using the existing version are not broken by the new version.
 
----
+--- 
 
-//TODO woudl not show that you can add if it is not part of the lab. Either upload already a schema such that they can see what it looks like and then provide some information or make a lab to add the schema
-
-> Next, click _Add schema +_
-
-Here you will be able to enter all the necessary information for adding a schema. You can upload the schema definition from a file and give your schema a relevant name and version.
-
-> Next, click _Cancel_
-
-On the **Schema Registry** page, you should see one or more schemas that where preconfigured for you. You should see the schema name, version and Data Format.
-
-If you click on the arrow pointing down, you will see the whole schema definition in JSON format. If you click on the schema name, you will be navigated to the configuration page of that schema.
-
-Here you can:
-
-- Add a new Schema version
-- Manage a schema version (deprecate, disable or remove)
-- Configure message encoding (JSON, Binary)
-- Find all the relevant information to connect to the schema registry, use the schema, generate credentials, etc...
-
-> For more information on schemas and how to use them, navigate to: [Schemas overview](https://ibm.github.io/event-automation/es/schemas/overview/)
-
-Let's have a view at the monitoring page.
-
----
-
-4. click **Monitoring** in the menu
+7. click **Monitoring** in the menu
 
 The Monitoring page allows you to quickly see important information about your Kafka cluster.
 
@@ -174,7 +199,7 @@ You will see data about incoming and outgoing message size, partitions and repli
 
 This data allows you to quickly monitor your cluster usage and detect problems with partitions and replicas.
 
-5. click **Toolbox** in the menu
+8. click **Toolbox** in the menu
 
 As discussed above, the toolbox will give you the tools for quickly start building Kafka applications and for interacting with your Kafka cluster.
 
@@ -223,7 +248,7 @@ You can keep the default of **a week**.
 
 ![Replication](resources/images/Replication.png)
 
-> [!NOTE]
+> [!NOTE]   
 > To improve availability and resiliency, each topic can be replicated onto multiple brokers. For each partition, one of the brokers is the leader, and the other brokers are the followers.
 
 You can select **Replication factor: 1, Minimum in-sync replicas: 1** for the purpose of this lab.
@@ -248,15 +273,11 @@ For this lab, the EventStreams Kafka cluster has been configured with SCRAM and 
 EventStreams is one of the solution based on Kafka that provides an easy to use user interface.  
 You will discover in the lab how easy it is to create credentials to access a specific TOPIC using this user interface.
 
----
-
-> [!NOTE]
->
-> - Salted Challenge Response Authentication Mechanism (SCRAM) is a family of modern, password-based challenge–response authentication mechanisms providing authentication of a user to a server, used by many software like Kafka, MongoDB, database and etc.
-> - An Event Streams cluster can be configured to expose any number of internal or external Kafka listeners. These listeners provide the mechanism for Kafka client applications to communicate with the Kafka brokers.
+> [!NOTE]  
+> - Salted Challenge Response Authentication Mechanism (SCRAM) is a family of modern, password-based challenge–response authentication mechanisms providing authentication of a user to a server, used by many software like Kafka, MongoDB, database and etc. 
+> - An Event Streams cluster can be configured to expose any number of internal or external Kafka listeners. These listeners provide the mechanism for Kafka client applications to communicate with the Kafka brokers.  
 > - For more information on managing access, navigate to: [Managing Access](https://ibm.github.io/event-automation/es/security/managing-access/)
 
----
 
 Let's now create the credentials for reaching our cluster securely.
 
@@ -362,17 +383,17 @@ The _URL_ for API Connect should have been provided separately.
 1. Navigate to the API Connect Developer portal
 
 Navigate to the developer portal and you should be navigated automatically to the login page, if you didn't login previously.
-//TODO provide the URL
 
-> <font size="1">**[API Connect URL]**</font>
+[API Connect Developer Portal](https://apim-demo-ptl-portal-web-cp4i-apic.apps.melch.coc-ibm.com/melch-admin-porg/sandbox)
 
-2. Enter the provided _username & password_ and click **Sign in**.
+1. Enter the provided _username & password_ and click **Sign in**.
+
+>[!IMPORTANT]  
+> UserName have the following pattern: devuser**x**   
+>where x is the number that has been provided to you. It is not possible to have two sessions opened as the same time with the same user. Please take the user that has been provided.   
+>The password should be provided by the assistant.
 
 ![APIC Sign In](resources/images/APIC_Login.png)
-
-//TODO define the user/password pattern... potuser1 ?
-
-> <font size="1">**[API Connect Username]**</font><br><font size="1">**[API Connect Password]**</font>
 
 You should now be logged in and see the _API Connect Developer Portal_.
 
@@ -430,9 +451,35 @@ Provide a sample **message body**, as an example you could use our sample messag
 If the message is successfully sent, you should receive a response with **status code 200**.  
 You should also see the response message. The response contains relevant metadata of the message, like the timestamp, offset, partition and topic.
 
-![APIC Response](resources/images/APIC_Response.png)
+![APIC Response](resources/APIC_Response.png)
 
-You can try to send a message to another TOPIC, you should receive an error. For example you can use the **CANCELLATIONS** TOPIC.
+--- 
+
+>[!IMPORTANT]
+>The first time that you try to send a message, you will receive an error with "No response received" (see below). This is because the UI is performing a call to the API Gateway that has a self-signed certificate.  
+>You need to accept the certificate (see how-to below)
+
+<img src="resources/images/APIC_CORS.png" alt="drawing" width="400"/>
+
+Click on the link provided in the response message, this will open a new page.  
+<img src="resources/images/API_Gateway_link.png" alt="drawing" width="400"/>
+
+In the new opened page, the warning linked to the self-signed certificate is displayed.
+Click on the "visit the web" (the confirmation can differs from on browser to another) site to accept the certificate.  
+<img src="resources/images/apic_gw_certificate_notif.png" alt="drawing" width="400"/>
+
+You will receive an error. You can close the window and come back to the API Connect developer portal.  
+![](resources/images/APIC_gw_error.png)
+
+On the API Connect developer portal, just click again on the send.  
+
+--- 
+
+10. Send to another topic with same credentials
+
+You can try to send a message to another TOPIC, you should receive an error.  
+For example you can use the **CANCELLATIONS** TOPIC.
+
 ![](resources/images/sendtocancellations_1.png)
 
 You should receive a unauthorized error:
@@ -457,7 +504,8 @@ IBM EventStreams user interface provides the ability to browse the content of th
 
 This is the user interface that we used to create our topic and make sure you are logged in.
 
-> <font size="1">**[Event Streams URL]**</font>
+[Event Streams Home Page](resources/Event_Streams_Home.png)
+
 
 2. Navigate to Topics, and locate your topic.
 
@@ -495,7 +543,7 @@ An application developer will create an application that will consume events fro
 
 The _URL_ for the Kafka Demo App should have been provided separately.
 
-> <font size="1">**[Kafka Demo App URL]**</font>
+[Kafka Demo App URL](http://kafka-consumer-app.apps.melch.coc-ibm.com/)
 
 ![Kafka Demo App](resources/images/ConsumerApp.png)
 
@@ -541,18 +589,16 @@ You will realized that the application is not reading any messages. Why?
 
 ---
 
-##### OPTIONAL. Connect using another TOPIC
-
-As you have generate credentials to consume event from a specific topic, you should not be able to access another topic.  
+--- 
+##### OPTIONAL Lab - Try to connect using another TOPIC
+As you have generate credentials to consume event from a specific topic, you should not be able to access another topic.   
 You can test to connect to another existing TOPIC with the same credentials, for example the **CANCELLATIONS** TOPIC.
 You should receive an authorization error.
 
 ![Kafka Demo App - Consumer Authorization Error](resources/images/consumerauthorizationerr.png)
 
----
-
-> [!IMPORTANT]
-> Reconnect your application with your TOPIC to EventStreams, we will use this connection on the last part of the lab.
+>[!IMPORTANT]   
+>Reconnect your application with your TOPIC to EventStreams, we will use this connection on the last part of the lab.
 
 ### 7. Consumer monitoring
 
@@ -563,7 +609,7 @@ Your consumer application should still be connected to EventStreams.
 
 This is the user interface that we used to create our topic and make sure you are logged in.
 
-> <font size="1">**[Event Streams URL]**</font>
+[Event Streams Home Page](resources/Event_Streams_Home.png)
 
 2. Navigate to Topics, and locate your topic.
 
@@ -599,6 +645,6 @@ The interface give you useful information about the consumer.
 
 ---
 
-#### Recap
+#### Wrap-up
 
 In this lab, we used Event Streams as our Kafka broker. We explored the user interface, created a Kafka topic and credentials and showed you how to explore Kafka messages through the user interface. We also tested the producing capabilities through API Connect and displayed the messages in real-time by connecting with the Demo Kafka App.
