@@ -299,22 +299,17 @@ We will use this credentials to produce and consume messages from the Kafka Topi
 
 <img src="resources/images/Generate_SCRAM_Topic.png" alt="drawing" width="400"/>
 
-Select **'A specific topic'** and fill in your **previously created topic** name.
+8. Select **'A specific topic'** and fill in your **previously created topic** name. Click **Next**.
+
 This will allow us to create credentials that only have access to produce and consume messages to the topic we created earlier.
 
-8. click **'Next'**.
+<img src="resources/images/Generate_SCRAM_Consumer.png" alt="drawing" width="400"/>
 
-<img src="resources/Generate_SCRAM_Consumer.png" alt="drawing" width="400"/>
-
-Keep the defaults **'All consumer groups'**
-
-9. click **'Next'**.
+9. Keep the defaults **'All consumer groups'**. Click **'Next'**.
 
 <img src="resources/images/Generate_SCRAM_Transactional.png" alt="drawing" width="400"/>
 
-Keep the defaults **'No transactional IDs'**
-
-10. click **'Generate credentials'**.
+10. Keep the defaults **'No transactional IDs'**. Click **'Generate credentials'**.
 
 The user interface provides a user and password that has been generated to access the TOPIC.
 
