@@ -393,7 +393,7 @@ Navigate to the developer portal and you should be navigated automatically to th
 >where x is the number that has been provided to you. It is not possible to have two sessions opened as the same time with the same user. Please take the user that has been provided.   
 >The password should be provided by the assistant.
 
-![APIC Sign In](resources/images/APIC_Login.png)
+![](resources/images/![APIC%20Sign%20In](resources/images/APIC_Login.png).png)
 
 You should now be logged in and see the _API Connect Developer Portal_.
 
