@@ -1,7 +1,10 @@
 # LAB 01.1 MQ to EventStreams
 
 >[!WARNING]
->**DRAFT**
+>**DRAFT** still under work
+
+
+![](resources/images/2023-11-02-12-56-42.png)
 
 
 [info on MQ Streaming](https://www.ibm.com/docs/en/ibm-mq/9.3?topic=scenarios-streaming-queues)
