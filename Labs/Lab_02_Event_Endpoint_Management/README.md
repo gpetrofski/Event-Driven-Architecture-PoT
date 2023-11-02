@@ -32,7 +32,7 @@ To achieve those task you will need to login in EEM as an author user.
 
 
 - eem_url: [Event Endpoint Management](https://my-eem-manager-ibm-eem-manager-event-automation.apps.melch.coc-ibm.com/)
-- eem_user: "eem_admin"
+- eem_user: "eem-admin"
 - eem_pwd: the password would be provided by the assistant
 
   <img src="resources/images/eem_login_admin.png" alt="drawing" width="400"/>
@@ -154,9 +154,9 @@ You will browse the event source in a catalog and will subscribe to the topic to
 
 ### Create Subscription lab
 
-1. Login in EEM using the user **EEM-user** 
+1. Login in EEM using the user **es-user** 
 
-We will use the user **EEM-user** to experience the application developer view: the application developer is authorized to only access the catalog.
+We will use the user **es-user** to experience the application developer view: the application developer is authorized to only access the catalog.
 
 Logout if not already done, by clicking on the user icon on the top right corner: 
 
@@ -371,9 +371,16 @@ The topic has three states:
 
 ### Archive the TOPIC
 
-1. Login to the EEM UI with the admin user.
+1. Login to the EEM home page as **eem-admin**
 
-[Event Endpoint Management](https://my-eem-manager-ibm-eem-manager-event-automation.apps.melch.coc-ibm.com/)
+
+
+  <img src="resources/images/eem_login_admin.png" alt="drawing" width="400"/>
+
+- eem_url: [Event Endpoint Management](https://my-eem-manager-ibm-eem-manager-event-automation.apps.melch.coc-ibm.com/)
+- eem_user: "eem-admin"
+- eem_pwd: the password would be provided by the assistant
+
 
 2. Click on TOPIC  
    
