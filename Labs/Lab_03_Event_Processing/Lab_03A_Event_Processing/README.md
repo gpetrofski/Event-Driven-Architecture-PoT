@@ -31,5 +31,6 @@ In this lab, we'll delve into the details of real-time event processing and anom
 
 ### Optional Labs
 
-| Lab | Location | Description |
+| Lab              | Location                                 | Description                                                        |
+| ---------------- | ---------------------------------------- | ------------------------------------------------------------------ |
 | Add Event Source | [LAB 03 B](../Lab_03B_Event_Processing/) | Learn how to add and configure an Event Source in Event Processing |
