@@ -26,3 +26,10 @@ In this lab, we'll delve into the details of real-time event processing and anom
 
 > [!NOTE]
 > The image above shows an example flow where this scenario was implemented. You can also find an example flow in [Assets](./resources/assets/Suspicious%20Orders.json).
+
+---
+
+### Optional Labs
+
+| Lab | Location | Description |
+| Add Event Source | [LAB 03 B](../Lab_03B_Event_Processing/) | Learn how to add and configure an Event Source in Event Processing |

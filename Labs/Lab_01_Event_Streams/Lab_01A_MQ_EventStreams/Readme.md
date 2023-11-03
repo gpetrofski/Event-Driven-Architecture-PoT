@@ -187,3 +187,11 @@ Send a message that you can easily identify:
 
 15. Your message should be there !!
     ![](resources/images/2023-11-01-20-39-30.png)
+
+---
+
+### Next Lab
+
+| Lab                       | Location                                          | Description                                                                                                   |
+| ------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Event Endpoint Management | [LAB 02](../../Lab_02_Event_Endpoint_Management/) | Learn how to describe and catalog your Kafka topics as event sources, and how to securely subscribe to topics |

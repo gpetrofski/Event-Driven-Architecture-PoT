@@ -147,3 +147,11 @@ It consists of a runtime that can run connectors to copy data to and from a clus
 IBM has connectors for [MQ](https://cloud.ibm.com/docs/EventStreams?topic=EventStreams-mq_connector) and [Cloud Object Storage](https://cloud.ibm.com/docs/EventStreams?topic=EventStreams-cos_connector). Many connectors are available and are often open source.
 
 > For a more extensive list of Kafka Connect connectors (Supported by IBM & by the community), navigate to the [Connector Catalog](https://ibm.github.io/event-automation/connectors/)
+
+---
+
+### Next Lab
+
+| Lab           | Location                           | Description                                                                                  |
+| ------------- | ---------------------------------- | -------------------------------------------------------------------------------------------- |
+| Event Streams | [LAB 01](../Lab_01_Event_Streams/) | Learn more about Event Streams, how to create topics and how to produce and consume messages |

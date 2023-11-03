@@ -60,9 +60,17 @@ In this case, this lab will help you create and configure an Event Source node f
 13. Make sure to select `Timestamp` for Date & Time properties. Next, make sure to select this property as `Source of event time`. This will allow us to work with time-based events. Keep **Save for re-use** enabled to re-use your connection when adding new event sources. Select **Configure**.
 
 > [!WARNING]  
-> For the 3 topics we use in this lab you can select the following properties:
-> ORDERS.NEW: ordertime  
-> CANCELLATIONS: canceltime  
-> CUSTOMERS.NEW: registered
+> For the 3 topics we use in this lab you can select the following properties:  
+> **ORDERS.NEW**: `ordertime`  
+> **CANCELLATIONS**: `canceltime`  
+> **CUSTOMERS.NEW**: `registered`
 
 Your new event source has now been configured. Next time you add an event source node onto the canvas, you should be able to re-use your pre-configured event source.
+
+---
+
+### Labs Overview
+
+| Lab           | Location                   | Description                  |
+| ------------- | -------------------------- | ---------------------------- |
+| Labs Overview | [Labs Overview](../../../) | Go back to the labs overview |
