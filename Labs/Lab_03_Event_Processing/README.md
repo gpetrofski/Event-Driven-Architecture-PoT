@@ -584,3 +584,12 @@ Let's have a look at the topic in the Event Streams UI.
 You have created an event processing flow. Processing events is key to extract valuable insights in real-time data and to detect situations that impact the business before it's too late.
 
 You can find other ideas for flows to create at [https://ibm.biz/ea-tutorials](https://ibm.biz/ea-tutorials).
+
+---
+
+### Optional Labs
+
+| Lab               | Location                                | Description                                                                                       |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Suspicious Orders | [LAB 03 A](./Lab_03A_Event_Processing/) | Advanced lab where you can try to create an Event Processing flow for detecting suspicious orders |
+| Add Event Source  | [LAB 03 B](./Lab_03B_Event_Processing/) | Learn how to add and configure an Event Source in Event Processing                                |
