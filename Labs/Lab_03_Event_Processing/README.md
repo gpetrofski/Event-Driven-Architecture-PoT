@@ -219,7 +219,7 @@ For this lab, let's use the assistant. When using the assistant, the Flink SQL e
 
 6. Click **Configure** to finish editing the expression.
 
-![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_Filter.png)
+![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_filter_view.png)
 
 You should now see that the Large Orders filter was renamed to **Large Orders**.
 
@@ -228,8 +228,12 @@ You should now see that the Large Orders filter was renamed to **Large Orders**.
 
 7. In order to test our flow, let's click **Run**, now click **Include historical**, and finally click on the `Large Orders` node.
 
+![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_filter.png)
+
 > [!IMPORTANT]
 > Make sure to select Run --> Include historical to visualise the data, based on historical data instead of only running it based on events from now. This will make sure we don't need to wait for new **Large Orders** to come in, but rather show us an overview of all previous large orders.
+
+**Click on the Large Orders node** to visualize the result.
 
 ![Event Processing Canvas Filter Run](resources/images/Event_Processing_Canvas_Filter_Run.png)
 
