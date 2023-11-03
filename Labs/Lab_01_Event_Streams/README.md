@@ -400,7 +400,7 @@ You should now be logged in and see the _API Connect Developer Portal_.
 
 3. Select the **Kafka Utils** product.
 
-![APIC Developer Portal](resources/images/APIC_Developer_Portal.png)
+![APIC Developer Portal](resources/images/2023-11-03-16-45-31.png)
 
 You should see one or more products on the developer portal dashboard after logging in.  
 For this lab, we will use the **Kafka Utils product**, which contains the API we need for producing messages on a topic.  
