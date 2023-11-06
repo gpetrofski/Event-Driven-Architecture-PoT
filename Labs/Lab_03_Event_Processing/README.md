@@ -219,7 +219,7 @@ For this lab, let's use the assistant. When using the assistant, the Flink SQL e
 
 6. Click **Configure** to finish editing the expression.
 
-![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_Filter_View.png)
+![Event Processing Canvas Filter View](resources/images/Event_Processing_Canvas_Filter_View.png)
 
 You should now see that the Large Orders filter was renamed to **Large Orders**.
 
