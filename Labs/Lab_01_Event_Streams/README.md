@@ -452,7 +452,7 @@ Provide a sample **message body**, as an example you could use our sample messag
 If the message is successfully sent, you should receive a response with **status code 200**.  
 You should also see the response message. The response contains relevant metadata of the message, like the timestamp, offset, partition and topic.
 
-![APIC Response](resources/APIC_Response.png)
+![APIC Response](resources/images/APIC_Response.png)
 
 ---
 
