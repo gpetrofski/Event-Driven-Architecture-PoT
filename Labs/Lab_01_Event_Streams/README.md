@@ -589,8 +589,6 @@ You will realize that the application is not showing any messages. Why?
 
 ---
 
----
-
 ##### OPTIONAL Lab - Try to connect using another TOPIC
 
 As you have generate credentials to consume event from a specific topic, you should not be able to access another topic.  
