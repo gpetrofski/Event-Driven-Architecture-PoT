@@ -576,10 +576,10 @@ Feel free to produce a couple more messages using API Connect to see the message
 
 Disconnect the consumer application by clicking the **disconnect from Kafka** button and reconnect it by clicking back the **connect to Kafka** button.
 
-You will realized that the application is not reading any messages. Why?
+You will realize that the application is not showing any messages. Why?
 
-> [!NOTES]
-> One of the value of Kafka is that messages written to a TOPIC are retained for a specific amount of time (defined at the TOPIC creation) and can't be modified.  
+> [!NOTE]
+> One of the values of Kafka is that messages written to a TOPIC are retained for a specific amount of time (defined at the TOPIC creation) and can't be modified.  
 > This has two advantages:
 >
 > - a consumer application is able to replay all messages in the TOPIC. By default Kafka keeps the last message position (offset) of the application consumer. If the consumer application disconnect and reconnect, Kafka will reposition the cursor of the application consumer where it was before the disconnection. This is the normal behavior of a Kafka consumer and **this is what we have implemented for the provided consumer application** . It is possible to force the consumer application to restart from the beginning though, this can be useful for specific use cases such as
