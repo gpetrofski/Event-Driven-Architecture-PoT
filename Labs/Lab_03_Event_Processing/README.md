@@ -219,7 +219,7 @@ For this lab, let's use the assistant. When using the assistant, the Flink SQL e
 
 6. Click **Configure** to finish editing the expression.
 
-![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_filter_view.png)
+![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_Filter_View.png)
 
 You should now see that the Large Orders filter was renamed to **Large Orders**.
 
@@ -228,7 +228,7 @@ You should now see that the Large Orders filter was renamed to **Large Orders**.
 
 7. In order to test our flow, let's click **Run**, now click **Include historical**, and finally click on the `Large Orders` node.
 
-![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_filter.png)
+![Event Processing Canvas Filter](resources/images/Event_Processing_Canvas_Filter.png)
 
 > [!IMPORTANT]
 > Make sure to select Run --> Include historical to visualise the data, based on historical data instead of only running it based on events from now. This will make sure we don't need to wait for new **Large Orders** to come in, but rather show us an overview of all previous large orders.
@@ -361,8 +361,8 @@ In the final step, we will need to configure the properties we want to remove af
 
 Let's rename and remove some properties.
 
-> To rename a property, **click on the property name**, **start editing** the property name and finally **click outside** the property name box.
-
+> [!NOTE]
+> To rename a property, **click on the property name**, **start editing** the property name and finally **click outside** the property name box.  
 > To remove a property, **click on the minus sign** next to the property name. You can add them back later if required by **clicking the plus sign** next to the removed properties.
 
 8. Click the minus (“Remove property”) button next to **every property** to clear the output properties.
@@ -378,7 +378,7 @@ Let's rename and remove some properties.
 | price            |               | Large Orders  |
 | region           |               | Large Orders  |
 
-9. Add the required properties and rename them appropriately. Click **Configure**.
+9. Add the required properties and rename them appropriately, using the table above. Click **Configure**.
 
 ![Event Processing Large New Customer Orders](resources/images/Event_Processing_Large_New_Customer_Orders.png)
 
